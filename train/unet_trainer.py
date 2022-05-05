@@ -32,7 +32,7 @@ class UnetTrainer:
                 random_img = img.cpu().detach().numpy()
                 random_target = target.cpu().detach().numpy()
                 random_pred = x_predicted.cpu().detach().numpy()
-
+            
             loss = self.criterion(x_predicted, target)
 
             self.optimizer.zero_grad()

@@ -31,16 +31,16 @@ class UNetResInc(BaseModel):
 
         for i in range(self.depth):
             down_block = DownBlock(
-                nn.Sequential(InceptionResNetModuleA(start_layers, padding_mode=params['padding_mode']),
+                nn.Sequential(InceptionResNetModuleA(start_layers, start_layers, padding_mode=params['padding_mode']),
                               nn.Dropout(params['dropout_p']),
                               nn.BatchNorm2d(start_layers)
                               ),
-                nn.Sequential(ReductionModuleA(start_layers, padding_mode=params['padding_mode'])))
+                nn.Sequential(IncResReductionBy2ModuleA(start_layers, 2 * start_layers, padding_mode=params['padding_mode'])))
 
             up_block = UpBlock(
                 nn.Sequential(nn.ConvTranspose2d(start_layers * 2, start_layers, 2, stride=2)),
                 nn.Sequential(nn.Conv2d(2 * start_layers, start_layers, kernel_size=1, stride=1, padding=0),
-                              InceptionResNetModuleA(start_layers, padding_mode=params['padding_mode']),
+                              InceptionResNetModuleA(start_layers, start_layers, padding_mode=params['padding_mode']),
                               nn.Dropout(params['dropout_p']),
                               nn.BatchNorm2d(start_layers)
                               ))
@@ -53,15 +53,15 @@ class UNetResInc(BaseModel):
         self.down_blocks = nn.ModuleList(down_blocks)
         self.up_blocks = nn.ModuleList(up_blocks)
 
-        self.buttom_layer = nn.Sequential(InceptionResNetModuleA(start_layers, padding_mode=params['padding_mode']),
+        self.buttom_layer = nn.Sequential(InceptionResNetModuleA(start_layers, start_layers, padding_mode=params['padding_mode']),
                                           nn.Dropout(params['dropout_p']),
                                           nn.BatchNorm2d(start_layers)
                                           )
 
         self.output_layer1 = nn.Sequential(
-            InceptionResNetModuleA(params['start_layers'], padding_mode=params['padding_mode']),
-            InceptionResNetModuleB(params['start_layers'], padding_mode=params['padding_mode']),
-            InceptionResNetModuleC(params['start_layers'], padding_mode=params['padding_mode']),
+            InceptionResNetModuleA(params['start_layers'], params['start_layers'], padding_mode=params['padding_mode']),
+            #InceptionResNetModuleB(params['start_layers'], padding_mode=params['padding_mode']),
+            #InceptionResNetModuleC(params['start_layers'], padding_mode=params['padding_mode']),
             nn.Dropout(params['dropout_p']),
             nn.BatchNorm2d(params['start_layers']),
             #nn.Conv2d(params['start_layers'], params['out_classes'], kernel_size=1, stride=1, padding=0)
@@ -88,10 +88,10 @@ class UNetResInc(BaseModel):
             idx = self.depth - 1 - i
             current_output = up_block.forward(current_output, concat_outputs[idx])
 
-        output = self.output_layer1(current_output)
+        #output = self.output_layer1(current_output)
 
-        output = output + input_tensor.expand(-1, self.start_layers, -1, -1)
+        #output = output + input_tensor.expand(-1, self.start_layers, -1, -1)
 
-        output = self.output_layer2(output)
+        output = self.output_layer2(current_output)
 
         return output

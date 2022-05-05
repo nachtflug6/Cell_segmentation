@@ -6,7 +6,7 @@ import torch.nn as nn
 import os
 import torchvision.transforms as T
 
-from datasets.utils.import_export import load_images_to_list_of_pil
+from .utils.import_export import *
 
 
 def get_random_reflections(original_ds, batches, batch_size, original_img_size, output_img_size, normalized=False):
