@@ -9,7 +9,7 @@ import torchvision.transforms as T
 from .utils.import_export import *
 
 
-def get_random_reflections(original_ds, batches, batch_size, original_img_size, output_img_size, normalized=False):
+def get_random_reflections(original_ds, batches, batch_size, original_img_size, output_img_size, normalized=False, ):
 
     new_ds = []
     num_examples = len(original_ds)
