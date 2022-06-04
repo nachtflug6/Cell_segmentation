@@ -91,6 +91,7 @@ class UNet(BaseModel):
         self.softmax = nn.Softmax(dim=1)
 
     def forward(self, input_tensor):
+        
         output_1 = self.cnn1(input_tensor)
         output_1 = self.dropout(output_1)
         output_1 = self.batch_1(output_1)
@@ -98,19 +99,19 @@ class UNet(BaseModel):
         output_2 = self.cnn2(self.max_pool_2(output_1))
         output_2 = self.dropout(output_2)
         output_2 = self.batch_2(output_2)
-
+        
         output_3 = self.cnn3(self.max_pool_2(output_2))
         output_3 = self.dropout(output_3)
         output_3 = self.batch_3(output_3)
-
+        
         output_4 = self.cnn4(self.max_pool_2(output_3))
         output_4 = self.dropout(output_4)
         output_4 = self.batch_4(output_4)
-
+        
         output_5 = self.cnn5(self.max_pool_2((output_4)))
         output_5 = self.dropout(output_5)
         output_5 = self.batch_5(output_5)
-
+        
         output_1_up = self.cnn1_up(th.cat((self.upconv_1(output_5), output_4), dim=1))
         output_1_up = self.dropout(output_1_up)
         output_1_up = self.batch_4(output_1_up)
