@@ -21,7 +21,7 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "C:/workspace/Binary_sharpness"
+    "last_opened_file_path": "C:/workspace/segmentation"
   }
 }]]></component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
@@ -36,6 +36,7 @@
       <workItem from="1654644677573" duration="1976000" />
       <workItem from="1654714309643" duration="856000" />
       <workItem from="1654907825349" duration="4026000" />
+      <workItem from="1656320907060" duration="59000" />
     </task>
     <servers />
   </component>

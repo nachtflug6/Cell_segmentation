@@ -9,8 +9,6 @@ __pycache__/
 # Distribution / packaging
 .Python
 saved_models/*
-data/images/*
-data/labels/*
 build/
 develop-eggs/
 dist/
