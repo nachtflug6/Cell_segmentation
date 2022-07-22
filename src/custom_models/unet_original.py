@@ -2,15 +2,11 @@
 # https://pyimagesearch.com/2021/11/08/u-net-training-image-segmentation-models-in-pytorch/
 # https://tuatini.me/practical-image-segmentation-with-unet/
 # https://discuss.pytorch.org/t/3d-unet-patch-based-segmentation-output-artifacts/60980/2
-import numpy as np
 
 import torch as th
 import torch.nn as nn
 
-from custom_models.blocks.constant_blocks import *
-from custom_models.blocks.reduction_blocks import *
-from custom_models.blocks.unet_blocks import *
-from custom_models.base_model import BaseModel
+from src.custom_models.base_model import BaseModel
 
 
 class UNet(BaseModel):

@@ -2,9 +2,7 @@ import os
 from torchvision.io import read_image
 from torch.utils.data import Dataset
 import pandas as pd
-from nnunet.utilities.file_conversions import convert_2d_image_to_nifti
-from nnunet.dataset_conversion.utils import generate_dataset_json
-import utils
+from src import utils
 
 
 class SemanticDataset(Dataset):
@@ -73,5 +71,5 @@ class SemanticDataset(Dataset):
     #                           labels={0: 'background', 1: 'cell'}, dataset_name=name_task, license='hands off!')
 
 
-ds = SemanticDataset(os.path.join(os.getcwd(), '../data'))
+ds = SemanticDataset(os.path.join(os.getcwd(), '../../data'))
 ds.create_nnunet_ds(os.path.join(os.getcwd(), '../nnUnet/nnUNet_raw_data_base/nnUNet_raw_data'), 503, 'RealCells')

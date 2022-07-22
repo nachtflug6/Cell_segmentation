@@ -52,6 +52,6 @@ def convert_ds_nnunet(ds_path, export_path, dataset_name, num_task):
 
 cwd = os.getcwd()
 ds_path = os.path.join(cwd, '../../data/cell_type_2_3d')
-ds_path_export = os.path.join(cwd, '../../../nnUnet/nnUNet_raw_data_base/nnUNet_raw_data')
+ds_path_export = os.path.join(cwd, '../../../../nnUnet/nnUNet_raw_data_base/nnUNet_raw_data')
 
 convert_ds_nnunet(ds_path, ds_path_export, 'test', 510)

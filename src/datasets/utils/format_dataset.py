@@ -43,6 +43,6 @@ def create_semantic_csv(path):
     return df
 
 cwd = os.getcwd()
-ds_path = os.path.join(cwd, '../../data/cell_type_2')
+ds_path = os.path.join(cwd, '../../../data/cell_type_2')
 
 create_semantic_csv(ds_path)

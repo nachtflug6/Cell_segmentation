@@ -74,7 +74,7 @@ def z_images_to_np_stack(ds_path, export_path):
 
 
 cwd = os.getcwd()
-ds_path = os.path.join(cwd, '../../data/cell_type_2')
+ds_path = os.path.join(cwd, '../../../data/cell_type_2')
 ds_path_export = os.path.join(cwd, '../../data/cell_type_2_3d')
 
 z_images_to_np_stack(ds_path, ds_path_export)
