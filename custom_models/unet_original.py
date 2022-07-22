@@ -7,10 +7,10 @@ import numpy as np
 import torch as th
 import torch.nn as nn
 
-from models.blocks.constant_blocks import *
-from models.blocks.reduction_blocks import *
-from models.blocks.unet_blocks import *
-from models.base_model import BaseModel
+from custom_models.blocks.constant_blocks import *
+from custom_models.blocks.reduction_blocks import *
+from custom_models.blocks.unet_blocks import *
+from custom_models.base_model import BaseModel
 
 
 class UNet(BaseModel):
