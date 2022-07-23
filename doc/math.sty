@@ -1,0 +1,222 @@
+%%
+%% This is file `math.sty',
+%% generated with the docstrip utility.
+%%
+%% The original source files were:
+%%
+%% math.dtx  (with options: `package,version2')
+%% 
+%% Copyright (C) 2000 by Dietrich Paulus. All rights reserved.
+%% 
+%% 
+%% This file is part of the LME TeX package
+%% 
+%% IMPORTANT NOTICE:
+%% 
+%% You are not allowed to change this file.  You may however copy this file
+%% to a file with a different name and then change the copy.
+%% 
+%% You are NOT ALLOWED to distribute this file alone.  You are NOT ALLOWED
+%% to take money for the distribution or use of this file (or a changed
+%% version) except for a nominal charge for copying etc.
+%% 
+%% You are allowed to distribute this file under the condition that it is
+%% distributed together with all files mentioned below.
+%% 
+%% If you receive only some of these files from someone, complain!
+%% 
+%% Error Reports in case of UNCHANGED versions to
+%% 
+%%                         Dietrich Paulus
+%%                         Lehrstuhl f. Mustererkennung
+%%                         D 91054 Erlangen
+%%             Internet:  <info@immd4.cs.fau.de>
+%% 
+%% $Id: math.dtx,v 1.12 2003/05/14 15:17:34 deutsch Exp $
+%% Copyright (C) 2000 Dietrich Paulus
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{math}
+         [2002/02/13 v1.02 Math Package (LME)]
+\def\twolang#1#2{#1} % ^^A Default
+%% \CharacterTable
+%% {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
+%%  Lower-case    \a\b\c\d\e\f\g\h\i\j\k\l\m\n\o\p\q\r\s\t\u\v\w\x\y\z
+%%  Digits        \0\1\2\3\4\5\6\7\8\9
+%%  Exclamation   \!     Double quote  \"     Hash (number) \#
+%%  Dollar        \$     Percent       \%     Ampersand     \&
+%%  Acute accent  \'     Left paren    \(     Right paren   \)
+%%  Asterisk      \*     Plus          \+     Comma         \,
+%%  Minus         \-     Point         \.     Solidus       \/
+%%  Colon         \:     Semicolon     \;     Less than     \<
+%%  Equals        \=     Greater than  \>     Question mark \?
+%%  Commercial at \@     Left bracket  \[     Backslash     \\
+%%  Right bracket \]     Circumflex    \^     Underscore    \_
+%%  Grave accent  \`     Left brace    \{     Vertical bar  \|
+%%  Right brace   \}     Tilde         \~}
+%%
+%% \iffalse meta-comment
+%% ===================================================================
+%%  @LaTeX-package-file{
+%%     author          = {Dietrich Paulus},
+%%     version         = "$Revision: 1.12 $",
+%%     date            = "$Date: 2003/05/14 15:17:34 $"
+%%     filename        = "math.sty",
+%%     address         = {Dietrich Paulus,
+%%                        Martensstr. 3 \
+%%                        D-91058 Erlangen
+%%     telephone       = "+49-9131-8527894",
+%%     email           = "paulus@cs.fau.de",
+%%     codetable       = "ISO/ASCII",
+%%     keywords        = "LaTeX2e, \shipout",
+%%     supported       = "yes",
+%%     docstring       = "LaTeX package which defines a new hook
+%%                        \EveryShipout".
+%%  }
+%% ===================================================================
+%% \fi
+\RequirePackage{bm}
+\def\abs#1{{\mathord{| #1 |}}}
+\def\mod{{\mathbin{\rm mod}}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Das Folgende muss noch vervollst"andigt werden in der Dokumentation
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand{\div}{{\mathbin{\rm div}}}
+\def\ggT#1#2{{\mathord{{\rm ggT}\left({#1},{#2}\right)}}}
+\def\kgV#1#2{{\mathord{{\rm kgV}\left({#1},{#2}\right)}}}
+\def\floor#1{{\mathord{\left\lfloor #1 \right\rfloor}}}
+\def\ceil#1{{\mathord{\left\lceil #1 \right\rceil}}}
+\def\sign{{\mathord{{\rm sign}}}}
+\def\Undefined{{\mathord{\perp}}}
+\def\invers#1{{#1}^{-1}}
+\def\defequal{{\mathbin{:=}}}
+\def\Defequal{{\mathbin{=:}}}
+\def\shouldbe{{\mathbin{\stackrel{\rm !}{=}}}}
+\def\conjugate#1{\bar{#1}}
+\makeatletter \def\argmax{\mathop{\operator@font argmax}}
+\makeatletter \def\argmin{\mathop{\operator@font argmin}}
+\def\defequivalent{{\mathbin{:\Leftrightarrow}}}
+\def\Defequivalent{{\mathbin{\Leftrightarrow:}}}
+\def\equivalent{{\mathbin{\Leftrightarrow}}}
+\def\implies{{\mathbin{\Rightarrow}}}
+\def\Implies{{\mathbin{\Leftarrow}}}
+\def\existsone{{\mathop{\stackrel{.}{\exists}}}}
+\def\logand{{\mathbin{\wedge}}}
+\def\logor{{\mathbin{\vee}}}
+\def\funv#1{{\mathord{\rm {#1}}}}
+\def\defunvar#1#2{{#1}\mapsto{#2}}
+\def\funbuild#1#2{\left\langle\defunvar{#1}{#2}\right\rangle}
+\def\domain{{\mathord{\rm dom}}}
+\def\range{{\mathord{\rm ran}}}
+\def\image{{\mathord{\rm im}}}
+\def\mapsinj{{\mathbin{\stackrel{\rm inj}{\longrightarrow}}}}
+\def\mapssur{{\mathbin{\stackrel{\rm sur}{\longrightarrow}}}}
+\def\mapsbij{{\mathbin{\stackrel{\rm bij}{\longrightarrow}}}}
+\def\mapspartial{{\mathbin{\rightharpoonup}}}
+\def\funprod{{\mathbin{\circ}}}
+\def\defunran#1#2{{#1}\longrightarrow{#2}}
+\def\depfunran#1#2{{#1}\mapspartial{#2}}
+\def\defunction#1#2#3#4{\left\{\begin{array}{l}\defunran{#1}{#2}\\ \defunvar{#3}{#4}\end{array}\right.}%}
+\def\depfunction#1#2#3#4{\left\{\begin{array}{l}\depfunran{#1}{#2}\\ \defunvar{#3}{#4}\end{array}\right.}%}
+
+\def\band{{\mathbin{\wedge}}}
+\def\bor{{\mathbin{\vee}}}
+\def\bxor{{\mathbin{\not\equiv}}}
+\def\bnot#1{\bar{#1}}
+
+\def\vecpl{\left(}
+\def\vecpr{\right)}
+\def\matpl{\left(}
+\def\matpr{\right)}
+\def\vecprod{{\mathbin{\times}}}
+\def\scalprod{{\mathbin{\cdot}}}
+\def\tensorprod{{\mathbin{\otimes}}}
+\def\matprod{\,}
+\def\transpose#1{{#1}^{\rm T}}
+\def\adjungate#1{{#1}^\ast}
+\def\norm#1{{\mathord{\| #1 \|}}}
+\def\determinant#1{{\mathord{\det\left( #1 \right)}}}
+\def\unitvec#1{{\mathord{\vec{e}_{#1}}}}
+\def\mat#1{\ensuremath{\bm#1}}
+\def\vec#1{\ensuremath{\bm#1}}
+\def\idmat#1{{\mat{{I\!d}}}_{#1}}
+
+\def\@endlist{listend}
+\long\def\@parselist(#1)(#2){%  1:sepSymbol 2:List
+  % define loop for parsing list
+  \global\long\def\toendoflist##1,##2){%
+    \ifx##2\@endlist ##1 \else ##1 #1 \toendoflist##2) \fi
+  }
+  % execute loop
+  \expandafter\toendoflist#2,\@endlist)
+}
+
+\long\def\rowvec(#1){{ \vecpl
+ \@parselist(,)(#1)
+\vecpr }}
+
+\long\def\colvec(#1){{%
+ \vecpl
+ \begin{array}{c}
+ \expandafter\@parselist(\\)(#1)
+ \end{array}
+ \vecpr
+}}
+\def\Matrix(#1,#2){\left(\begin{array}{*{#2}{c}}}
+\def\endMatrix{\end{array}\right)}
+\def\setv#1{{#1}}  % Nach LME Richtlinie: \cal nur fuer Strukturen
+\long\def\set(#1){{\mathord{\left\{\@parselist(,)(#1)\right\}}}}
+\def\seqv#1{{\mathord{\cal #1}}}
+\long\def\sequence(#1){{\mathord{\left\langle\@parselist(,)(#1)\right\rangle}}}
+\long\def\without#1(#2){{{#1}\setminus\set(#2)}}
+\long\def\with#1(#2){{{#1}\setunion\set(#2)}}
+\def\setunion{{\mathbin{\cup}}}
+\def\setint{{\mathbin{\cap}}}
+\def\setdisun{{\mathbin{\stackrel{.}{\setunion}}}}
+\def\setprod{{\mathbin{\times}}}
+\def\cardinality#1{{\mathord{\left| {#1} \right|}}}
+\def\powerset#1{{\mathord{2^{#1}}}}
+
+\def\real{\mathord{\rm I\!R}}
+\def\cardinal{\mathord{\rm I\!N}}
+\def\cardzero{\mathord{\rm I\!N}_0}
+\def\imaginary{\mathord{\rm I\!I}}
+\def\integer{\mathord{\rm Z\!\!Z}}
+\def\complex{{\mathord{\rm C}}}
+\def\rational{{\mathord{\rm Q}}}
+
+\def\vecspace#1#2{{#1}^{#2}}
+\def\matspace#1#2#3{{#1}^{\,({#2},{#3})}}
+\def\funspace#1#2{{#2}^{#1}}
+
+\def\half{\frac{\scriptstyle 1}{\scriptstyle 2}}
+\def\onethird{\frac{\scriptstyle 1}{\scriptstyle 3}}
+\def\twothird{\frac{\scriptstyle 2}{\scriptstyle 3}}
+\def\dfrac#1#2{\frac{\displaystyle #1}{\displaystyle #2}}
+\def\tfrac#1#2{\frac{\textstyle #1}{\textstyle #2}}
+\def\scfrac#1#2{\frac{\scriptstyle #1}{\scriptstyle #2}}
+\def\scscfrac#1#2{\frac{\scriptscriptstyle #1}{\scriptscriptstyle #2}}
+
+\def\p#1{{\mathord{\sf #1}}}
+\def\pti#1#2{{\mathord{\sf #1}_{\rm #2}}}
+\def\ptline#1#2#3#4{\overline{{\sf #1}_{\rm #2}{\sf #3}}_{\rm #4}}
+
+\long\def\opolygon(#1){{\overline{\@parselist(\,)(#1)}}}
+\long\def\cpolygon(#1,#2){{\overline{#1\,\@parselist(\,)(#2)\,#1}}}
+
+\def\D{\displaystyle}
+\def\T{\textstyle}
+\def\SC{\scriptstyle}
+\def\SCSC{\scriptscriptstyle}
+
+\def\complexity#1{{${\rm O}(#1)$}}
+
+\def\laplacesym{{\mathord{\cal L}}}
+\def\fouriersym{{\mathord{\rm FT}}}
+\def\laplace#1{\laplacesym\{{#1}\}}
+\def\fourier#1{\fouriersym\{{#1}\}}
+\def\ilaplace#1{\invers{\laplacesym}\{{#1}\}}
+\def\ifourier#1{\invers{\fouriersym}\{{#1}\}}
+
+\endinput
+%%
+%% End of file `math.sty'.

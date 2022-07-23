@@ -1,0 +1,36 @@
+\begin{thebibliography}{Bam96}
+
+\bibitem[Bam96]{Bamford96:AWI}
+P.~Bamford and B.~Lovell.
+\newblock A water immersion algorithm for cytological image segmentation.
+\newblock In {\em Proceeding of Segment 96}, Sydney, December 1996.
+\newblock http://citeseer.nj.nec.com/bamford96water.html.
+
+\bibitem[Dör87]{Doerrer87:ELS}
+R.~Dörrer, J.~Fischer, W.~Greiner, W.~Schlipf, and P.~Schwarzmann.
+\newblock Ein lernendes {S}ystem zur {Z}ellbildanalyse.
+\newblock {T}echnischer {B}ericht, Institut für Physikalische Elektronik,
+  Universität Stuttgart, Stuttgart, 1987.
+
+\bibitem[Hal99]{Hallinan99:DOM}
+J.S. Hallinan.
+\newblock {\em Detection of Malignancy Associated Changes in Cervical Cells
+  Using Statistical and Evolutionary Computation Techniques}.
+\newblock PhD thesis, Centre for Sensor Signal and Information Processing, The
+  University of Queensland, Brisbane, Australia, 1999.
+\newblock http://citeseer.nj.nec.com/hallinan99detection.html.
+
+\bibitem[Pap42]{Papanicolaou42:ANP}
+G.~Papanicolaou.
+\newblock A new procedure for staining vaginal smears.
+\newblock {\em Science}, 95:438--439, 1942.
+
+\bibitem[Rod01]{Rodler01:EEF}
+F.~Rodler.
+\newblock {\em {E}rstellung eines {F}rameworks zur {B}ewegungsanalyse durch
+  {A}ktive {K}onturbasierte {V}erfahren}.
+\newblock {D}iplomarbeit, {Fakultät für Informatik, Technische Universität
+  München} und {Fraunhofer Institut für Integrierte Schaltungen - Angewandte
+  Elektronik}, München, November 2001.
+
+\end{thebibliography}

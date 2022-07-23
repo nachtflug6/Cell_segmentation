@@ -1,0 +1,74 @@
+This is BibTeX, Version 0.99d
+Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
+The top-level auxiliary file: mt00.aux
+Reallocating 'name_of_file' (item size: 1) to 9 items.
+The style file: alphamod.bst
+Reallocating 'name_of_file' (item size: 1) to 22 items.
+A level-1 auxiliary file: chapters/abstract.aux
+Reallocating 'name_of_file' (item size: 1) to 20 items.
+A level-1 auxiliary file: ./chapters/mt01.aux
+Reallocating 'name_of_file' (item size: 1) to 18 items.
+A level-1 auxiliary file: chapters/mt02.aux
+Reallocating 'name_of_file' (item size: 1) to 18 items.
+A level-1 auxiliary file: chapters/mt03.aux
+Reallocating 'name_of_file' (item size: 1) to 18 items.
+A level-1 auxiliary file: chapters/mt04.aux
+Reallocating 'name_of_file' (item size: 1) to 18 items.
+A level-1 auxiliary file: chapters/mt05.aux
+Reallocating 'name_of_file' (item size: 1) to 18 items.
+A level-1 auxiliary file: chapters/mt06.aux
+Reallocating 'name_of_file' (item size: 1) to 18 items.
+A level-1 auxiliary file: chapters/mt07.aux
+Reallocating 'name_of_file' (item size: 1) to 18 items.
+A level-1 auxiliary file: chapters/mt08.aux
+Reallocating 'name_of_file' (item size: 1) to 18 items.
+A level-1 auxiliary file: chapters/mt09.aux
+Reallocating 'name_of_file' (item size: 1) to 20 items.
+A level-1 auxiliary file: chapters/mt-lof.aux
+Reallocating 'name_of_file' (item size: 1) to 20 items.
+A level-1 auxiliary file: chapters/mt-lot.aux
+Reallocating 'name_of_file' (item size: 1) to 20 items.
+A level-1 auxiliary file: chapters/mt-lit.aux
+Reallocating 'name_of_file' (item size: 1) to 12 items.
+Database file #1: chapters/mt.bib
+You've used 5 entries,
+            2543 wiz_defined-function locations,
+            612 strings with 5836 characters,
+and the built_in function-call counts, 1638 in all, are:
+= -- 164
+> -- 67
+< -- 5
++ -- 22
+- -- 20
+* -- 108
+:= -- 295
+add.period$ -- 17
+call.type$ -- 5
+change.case$ -- 30
+chr.to.int$ -- 5
+cite$ -- 5
+duplicate$ -- 71
+empty$ -- 111
+format.name$ -- 30
+if$ -- 321
+int.to.chr$ -- 1
+int.to.str$ -- 0
+missing$ -- 2
+newline$ -- 30
+num.names$ -- 15
+pop$ -- 25
+preamble$ -- 1
+purify$ -- 35
+quote$ -- 0
+skip$ -- 49
+stack$ -- 0
+substring$ -- 58
+swap$ -- 4
+text.length$ -- 5
+text.prefix$ -- 5
+top$ -- 0
+type$ -- 40
+warning$ -- 0
+while$ -- 11
+width$ -- 7
+write$ -- 74

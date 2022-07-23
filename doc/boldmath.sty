@@ -1,0 +1,95 @@
+%%
+%% This is file `boldmath.sty',
+%% generated with the docstrip utility.
+%%
+%% The original source files were:
+%%
+%% boldmath.dtx  (with options: `package')
+%% 
+%% Copyright (C) 2000 by Dietrich Paulus. All rights reserved.
+%% 
+%% 
+%% This file is part of the LME TeX package
+%% 
+%% IMPORTANT NOTICE:
+%% 
+%% You are not allowed to change this file.  You may however copy this file
+%% to a file with a different name and then change the copy.
+%% 
+%% You are NOT ALLOWED to distribute this file alone.  You are NOT ALLOWED
+%% to take money for the distribution or use of this file (or a changed
+%% version) except for a nominal charge for copying etc.
+%% 
+%% You are allowed to distribute this file under the condition that it is
+%% distributed together with all files mentioned below.
+%% 
+%% If you receive only some of these files from someone, complain!
+%% 
+%% Error Reports in case of UNCHANGED versions to
+%% 
+%%                         Dietrich Paulus
+%%                         Lehrstuhl f. Mustererkennung
+%%                         D 91054 Erlangen
+%%             Internet:  <info@immd4.cs.fau.de>
+%% 
+%% $Id: boldmath.dtx,v 1.4 2001/02/06 16:13:35 paulus Exp $
+%% Copyright (C) 2000 Dietrich Paulus
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{boldmath}
+         [2000/02/19 v1.01 SUB Package (LME)]
+\def\twolang#1#2{#1} % ^^A Default
+%% \CharacterTable
+%% {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
+%%  Lower-case    \a\b\c\d\e\f\g\h\i\j\k\l\m\n\o\p\q\r\s\t\u\v\w\x\y\z
+%%  Digits        \0\1\2\3\4\5\6\7\8\9
+%%  Exclamation   \!     Double quote  \"     Hash (number) \#
+%%  Dollar        \$     Percent       \%     Ampersand     \&
+%%  Acute accent  \'     Left paren    \(     Right paren   \)
+%%  Asterisk      \*     Plus          \+     Comma         \,
+%%  Minus         \-     Point         \.     Solidus       \/
+%%  Colon         \:     Semicolon     \;     Less than     \<
+%%  Equals        \=     Greater than  \>     Question mark \?
+%%  Commercial at \@     Left bracket  \[     Backslash     \\
+%%  Right bracket \]     Circumflex    \^     Underscore    \_
+%%  Grave accent  \`     Left brace    \{     Vertical bar  \|
+%%  Right brace   \}     Tilde         \~}
+%%
+%% \iffalse meta-comment
+%% ===================================================================
+%%  @LaTeX-package-file{
+%%     author          = {Dietrich Paulus},
+%%     version         = "$Revision: 1.4 $",
+%%     date            = "$Date: 2001/02/06 16:13:35 $"
+%%     filename        = "boldmath.sty",
+%%     address         = {Dietrich Paulus,
+%%                        Martensstr. 3 \
+%%                        D-91058 Erlangen
+%%     telephone       = "+49-9131-8527894",
+%%     email           = "paulus@cs.fau.de",
+%%     codetable       = "ISO/ASCII",
+%%     keywords        = "LaTeX2e, \shipout",
+%%     supported       = "yes",
+%%     docstring       = "LaTeX package which defines a new hook
+%%                        \EveryShipout".
+%%  }
+%% ===================================================================
+%% \fi
+\RequirePackage{bm}
+\makeatletter
+\@ifundefined{FoilTeX}{%
+  \typeout{OK}
+  \let\FinishIt\relax
+}{%
+  \typeout{**********************************************************}
+  \typeout{Warning: FoilTeX and boldmath.sty currently not compatible}
+  \typeout{Skipping boldmath.sty}
+  \typeout{**********************************************************}
+  \let\FinishIt=\endinput
+}
+\FinishIt
+\let\Stdbm=\bm
+\def\bm#1{{\it \Stdbm{#1}}}
+\def\bm#1{\Stdbm{\mathit #1}}
+\endinput
+%%
+%% End of file `boldmath.sty'.

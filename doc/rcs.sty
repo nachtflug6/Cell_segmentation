@@ -1,0 +1,118 @@
+%%
+%% This is file `rcs.sty',
+%% generated with the docstrip utility.
+%%
+%% The original source files were:
+%%
+%% rcs.dtx  (with options: `package')
+%% 
+%% Copyright (C) 2000 by Dietrich Paulus. All rights reserved.
+%% 
+%% 
+%% This file is part of the LME TeX package
+%% 
+%% IMPORTANT NOTICE:
+%% 
+%% You are not allowed to change this file.  You may however copy this file
+%% to a file with a different name and then change the copy.
+%% 
+%% You are NOT ALLOWED to distribute this file alone.  You are NOT ALLOWED
+%% to take money for the distribution or use of this file (or a changed
+%% version) except for a nominal charge for copying etc.
+%% 
+%% You are allowed to distribute this file under the condition that it is
+%% distributed together with all files mentioned below.
+%% 
+%% If you receive only some of these files from someone, complain!
+%% 
+%% Error Reports in case of UNCHANGED versions to
+%% 
+%%                         Dietrich Paulus
+%%                         Lehrstuhl f. Mustererkennung
+%%                         D 91054 Erlangen
+%%             Internet:  <info@immd4.cs.fau.de>
+%% 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%
+\def\rcs$#1${\rcs@#1:$}  % so geht's (aber ohne unterstrich im Dateinamen...)
+
+\def\rcs{\bgroup\catcode`\_=\active\catcode`\%=11
+     \def\_{\leavevmode\kern.05em\vbox{\hrule width 1ex}\kern.05em}%
+     \ercs}              % auch mit Unterstrich
+\def\ercs$#1${\rcs@#1:$\catcode`\_=8\egroup\ignorespaces}
+
+\def\rcs@#1:#2${%
+  {\def\temp@{#2}\ifx\temp@\empty\rcs@@#1:$\else\rcs@@@#1:#2$ \fi}}
+\def\rcs@@#1:#2${\rcs@@@#1: #2 :$}
+\def\rcs@@@#1: #2 :${%
+        \expandafter\ifx\csname rcs@#1\endcsname\relax
+                \expandafter\gdef\csname rcs#1\endcsname{#2}%
+        \else
+                        \csname rcs@#1\endcsname{#2}%
+        \fi
+}
+\def\rcs@Date#1{%
+        \gdef\rcsRawDate{#1}%
+        \ifx\today\relax
+                \gdef\rcsDate{#1}%
+        \else
+                \ifx\temp@\empty %Note: temp@ still valid from the \rcs@ call
+                        \gdef\rcsDate{\today}%
+                \else
+                        \rcs@@Date #1$%
+                \fi
+        \fi
+}
+\def\rcs@@Date #1/#2/#3 #4${
+    \gdef\rcsTime{#4}%
+    \def\year{#1}\def\month{#2}\def\day{#3}% Note: we are in a group by rcs@
+    \let\"=\relax
+    \xdef\rcsDate{\today}}
+
+\def\rcsTime{}
+\def\rcsSource{}
+\def\rcsDate{}
+\def\rcsRevision{}
+
+\def\@endfl{*x*}
+\def\@parsefl #1,v{#1}
+\def\@parseflist#1/#2@@xx@@{%
+    \edef\abc{#1}%
+    \ifx\abc\@endfl
+        \relax\debugmsg{finish #1 with rest #2}%
+    \else
+        \edef\abc{#2@@xx@@}%
+        \edef\fname{#1}%
+        \expandafter\@parseflist\abc\relax%
+    \fi
+}
+\def\rcsF{%
+    \edef\abc{\ignorespaces\rcsSource/\@endfl/@@xx@@}
+    \expandafter\@parseflist\abc
+}
+\def\rcsFil[#1]{\rcsF
+    \def\stripit ##1#1,v{##1}%
+    \expandafter\stripit\fname\relax
+}
+
+\def\rcsFil[#1]{\rcsF \expandafter \@parsefl \fname }
+\def\rcsFile{\@ifnextchar [{\rcsFil}{\rcsFil[\empty]}} %]
+
+\def\rcsSource{path/RCS/undefined,v}
+\def\rcsfile#1/RCS/#2,v*{#2}
+\def\rcspath#1/RCS/#2,v*{#1}
+\def\rcsFile{\expandafter\rcsfile\rcsSource*}
+\def\rcsPath{\expandafter\rcspath\rcsSource*}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\rcs$Author: paulus $
+\rcs$Source: /net/texexp/lme/texmf/tex/styles/rcs/rcs.dtx,v $
+\rcs$Revision: 1.1 $
+\rcs$Date: 2001/02/05 07:36:42 $
+\edef\StyleVersion{\rcsRevision}
+\edef\StyleDate{\rcsDate}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\endinput
+%%
+%% End of file `rcs.sty'.
