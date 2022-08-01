@@ -73,7 +73,7 @@ def augment_dataset(ds,
 
 
 def load_images_to_list_of_pil(import_path):
-    # return array of images
+    # return array of graphics
 
     images_list = listdir(import_path)
     loaded_images = []

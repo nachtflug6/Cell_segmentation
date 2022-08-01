@@ -19,7 +19,7 @@ def convert_name_to_dict(name):
 
 def create_semantic_csv(path):
 
-    images_path = os.path.join(path, 'images')
+    images_path = os.path.join(path, 'graphics')
     labels_path = os.path.join(path, 'labels')
 
     assert os.path.isdir(images_path), f"Folder missing: {images_path}"
@@ -32,7 +32,7 @@ def create_semantic_csv(path):
 
     for img in image_list:
         if img in label_list:
-            img_path = os.path.join('images', img)
+            img_path = os.path.join('graphics', img)
             label_path = os.path.join('labels', img)
             basename_split = os.path.splitext(img)
             name_dict = convert_name_to_dict(basename_split[0])

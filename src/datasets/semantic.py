@@ -73,7 +73,7 @@ def random_reflection(input_img_tensor, input_target_tensor, img_size, output_si
 def get_semantic_ds(path, classes: list, instances=False):
     ds = []
 
-    images_path = os.path.join(path, 'images')
+    images_path = os.path.join(path, 'graphics')
     if instances:
         labels_path = os.path.join(path, 'instance_labels')
     else:

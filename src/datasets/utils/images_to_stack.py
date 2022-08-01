@@ -53,7 +53,7 @@ def z_images_to_np_stack(ds_path, export_path):
             export_name = 's' + str(row['Sample']) + '_v' + str(row['View'])
             print(f'Saving: {export_name}')
 
-            img_export_path = os.path.join(export_path, 'images')
+            img_export_path = os.path.join(export_path, 'graphics')
             label_export_path = os.path.join(export_path, 'labels')
 
             if not os.path.isdir(img_export_path):
@@ -64,7 +64,7 @@ def z_images_to_np_stack(ds_path, export_path):
             np.save(os.path.join(img_export_path, export_name), img_tensor)
             np.save(os.path.join(label_export_path, export_name), label_tensor)
 
-            df_out.loc[len(df_out.index)] = [os.path.join('images', export_name),
+            df_out.loc[len(df_out.index)] = [os.path.join('graphics', export_name),
                                              os.path.join('labels', export_name),
                                              row['Sample'],
                                              row['View'],
