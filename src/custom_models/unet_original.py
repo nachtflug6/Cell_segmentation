@@ -89,35 +89,35 @@ class UNet(BaseModel):
     def forward(self, input_tensor):
         
         output_1 = self.cnn1(input_tensor)
-        output_1 = self.dropout(output_1)
+        #output_1 = self.dropout(output_1)
         output_1 = self.batch_1(output_1)
 
         output_2 = self.cnn2(self.max_pool_2(output_1))
-        output_2 = self.dropout(output_2)
+        #output_2 = self.dropout(output_2)
         output_2 = self.batch_2(output_2)
         
         output_3 = self.cnn3(self.max_pool_2(output_2))
-        output_3 = self.dropout(output_3)
+        #output_3 = self.dropout(output_3)
         output_3 = self.batch_3(output_3)
         
         output_4 = self.cnn4(self.max_pool_2(output_3))
-        output_4 = self.dropout(output_4)
+        #output_4 = self.dropout(output_4)
         output_4 = self.batch_4(output_4)
         
         output_5 = self.cnn5(self.max_pool_2((output_4)))
-        output_5 = self.dropout(output_5)
+        #output_5 = self.dropout(output_5)
         output_5 = self.batch_5(output_5)
         
         output_1_up = self.cnn1_up(th.cat((self.upconv_1(output_5), output_4), dim=1))
-        output_1_up = self.dropout(output_1_up)
+        #output_1_up = self.dropout(output_1_up)
         output_1_up = self.batch_4(output_1_up)
 
         output_2_up = self.cnn2_up(th.cat((self.upconv_2(output_1_up), output_3), dim=1))
-        output_2_up = self.dropout(output_2_up)
+        #output_2_up = self.dropout(output_2_up)
         output_2_up = self.batch_3(output_2_up)
 
         output_3_up = self.cnn3_up(th.cat((self.upconv_3(output_2_up), output_2), dim=1))
-        output_3_up = self.dropout(output_3_up)
+        #output_3_up = self.dropout(output_3_up)
         output_3_up = self.batch_2(output_3_up)
 
         output = self.cnn4_up(th.cat((self.upconv_4(output_3_up), output_1), dim=1))

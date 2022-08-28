@@ -1,23 +1,19 @@
 import os
-from torchvision.io import read_image
 from torch.utils.data import Dataset
 import pandas as pd
-from src import utils
+import tifffile as tif
+import numpy as np
 
 
 class SemanticDataset(Dataset):
     def __init__(self, ds_dir, transform=None, target_transform=None, dim=2):
         assert dim in [2, 3]
 
-        if dim > 2:
-            pass
+        self.dim = dim
 
         self.ds_dir = ds_dir
         csv_path = os.path.join(ds_dir, 'data.csv')
-        if os.path.isfile(csv_path):
-            img_label_df = pd.read_csv(csv_path)
-        else:
-            img_label_df = utils.create_csv.create_semantic_csv(ds_dir)
+        img_label_df = pd.read_csv(csv_path, index_col=False)
         self.img_label_df = img_label_df
 
         self.transform = transform
@@ -27,9 +23,13 @@ class SemanticDataset(Dataset):
         return len(self.img_label_df['Image'])
 
     def __getitem__(self, idx):
-        img_path = os.path.join(self.img_dir, self.img_labels.iloc[idx, 0])
-        image = read_image(img_path)
-        label = self.img_labels.iloc[idx, 1]
+        img_path = os.path.join(self.ds_dir, self.img_label_df.iloc[idx, 0])
+        image = tif.imread(img_path)
+        image = np.asarray(image, dtype=np.float32)
+        label_path = os.path.join(self.ds_dir, self.img_label_df.iloc[idx, 1])
+        label = tif.imread(label_path)
+        label = np.asarray(label, dtype=np.float32)
+        np.where(label > 0, 1, 0)
         if self.transform:
             image = self.transform(image)
         if self.target_transform:
@@ -71,5 +71,5 @@ class SemanticDataset(Dataset):
     #                           labels={0: 'background', 1: 'cell'}, dataset_name=name_task, license='hands off!')
 
 
-ds = SemanticDataset(os.path.join(os.getcwd(), '../../data'))
-ds.create_nnunet_ds(os.path.join(os.getcwd(), '../nnUnet/nnUNet_raw_data_base/nnUNet_raw_data'), 503, 'RealCells')
+# ds = SemanticDataset(os.path.join(os.getcwd(), '../../data'))
+# ds.create_nnunet_ds(os.path.join(os.getcwd(), '../nnUnet/nnUNet_raw_data_base/nnUNet_raw_data'), 503, 'RealCells')
