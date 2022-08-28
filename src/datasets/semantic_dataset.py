@@ -6,7 +6,7 @@ import numpy as np
 
 
 class SemanticDataset(Dataset):
-    def __init__(self, ds_dir, transform=None, target_transform=None, dim=2):
+    def __init__(self, ds_dir, folds, transform=None, target_transform=None, dim=2):
         assert dim in [2, 3]
 
         self.dim = dim
@@ -14,13 +14,23 @@ class SemanticDataset(Dataset):
         self.ds_dir = ds_dir
         csv_path = os.path.join(ds_dir, 'data.csv')
         img_label_df = pd.read_csv(csv_path, index_col=False)
-        self.img_label_df = img_label_df
+
+        self.img_label_df = None
+        for fold in folds:
+            if isinstance(self.img_label_df, type(None)):
+                self.img_label_df = img_label_df[img_label_df['fold'] == fold]
+            else:
+                self.img_label_df = pd.concat((self.img_label_df, img_label_df[img_label_df['fold'] == fold]))
+
+        print(self.img_label_df)
+
+        self.len = len(self.img_label_df)
 
         self.transform = transform
         self.target_transform = target_transform
 
     def __len__(self):
-        return len(self.img_label_df['Image'])
+        return self.len
 
     def __getitem__(self, idx):
         img_path = os.path.join(self.ds_dir, self.img_label_df.iloc[idx, 0])
