@@ -3,6 +3,7 @@ from torch.utils.data import Dataset
 import pandas as pd
 import tifffile as tif
 import numpy as np
+import torch as th
 
 
 class SemanticDataset(Dataset):
@@ -22,8 +23,6 @@ class SemanticDataset(Dataset):
             else:
                 self.img_label_df = pd.concat((self.img_label_df, img_label_df[img_label_df['fold'] == fold]))
 
-        print(self.img_label_df)
-
         self.len = len(self.img_label_df)
 
         self.transform = transform
@@ -39,7 +38,16 @@ class SemanticDataset(Dataset):
         label_path = os.path.join(self.ds_dir, self.img_label_df.iloc[idx, 1])
         label = tif.imread(label_path)
         label = np.asarray(label, dtype=np.float32)
-        np.where(label > 0, 1, 0)
+        new_label = np.zeros((2, *label.shape))
+        for i in range(2):
+            if i == 0:
+                new_label[i] = np.where(label == 0, 1, 0)
+            else:
+                new_label[i] = np.where(label == 1, 1, 0)
+        label = new_label
+        image = np.expand_dims(image, axis=0)
+        image = th.from_numpy(image)
+        label = th.from_numpy(label)
         if self.transform:
             image = self.transform(image)
         if self.target_transform:

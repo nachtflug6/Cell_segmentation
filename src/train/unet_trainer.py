@@ -5,23 +5,29 @@ import torch as th
 class UnetTrainer:
     def __init__(self, model: th.nn.Module, device: th.device, criterion: th.nn.Module, optimizer: th.optim.Optimizer,
                  ds_train, ds_test):
-        self.model = model
+        self.model = model.to(device)
         self.criterion = criterion
         self.optimizer = optimizer
         self.device = device
         self.ds_train = ds_train
         self.ds_test = ds_test
+        self.trainloader = th.utils.data.DataLoader(ds_train, batch_size=1, shuffle=True)
+        self.testloader = th.utils.data.DataLoader(ds_test, batch_size=1, shuffle=True)
         self.epochs = 0
         self.train_losses = []
         self.test_losses = []
 
-    def train_epoch(self, trainloader):
+    def train(self, epochs):
+        for i in range(epochs):
+            self.train_epoch()
+
+    def train_epoch(self):
         current_loss = []
         self.epochs += 1
 
         random_img = random_target = random_pred = None
 
-        for j, data in enumerate(trainloader, 0):
+        for j, data in enumerate(self.trainloader, 0):
             img, target = data
 
             target = target.to(self.device)
@@ -45,13 +51,13 @@ class UnetTrainer:
 
         return random_img, random_target, random_pred
 
-    def test(self, testloader):
+    def test(self):
         current_loss = []
         self.epochs += 1
 
         random_img = random_target = random_pred = None
 
-        for j, data in enumerate(testloader, 0):
+        for j, data in enumerate(self.testloader, 0):
             img, target = data
             target = target.to(self.device)
             img = img.to(self.device)
