@@ -5,12 +5,12 @@
 
 import torch as th
 import torch.nn as nn
-from blocks.unet_blocks import *
+from .blocks.unet_blocks import *
 
 
 class UNet(nn.Module):
     def __init__(self, params):
-
+        super(UNet, self).__init__()
         self.batch_1 = th.nn.BatchNorm2d(64)
         self.batch_2 = th.nn.BatchNorm2d(128)
         self.batch_3 = th.nn.BatchNorm2d(256)
@@ -128,6 +128,7 @@ class UNet(nn.Module):
 
 class UNet2(nn.Module):
     def __init__(self, params):
+        super(UNet, self).__init__()
         self.depth = params['depth']
         self.out_classes = params['out_classes']
 
