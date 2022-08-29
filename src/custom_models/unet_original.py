@@ -5,13 +5,11 @@
 
 import torch as th
 import torch.nn as nn
+from blocks.unet_blocks import *
 
-from src.custom_models.base_model import BaseModel
 
-
-class UNet(BaseModel):
+class UNet(nn.Module):
     def __init__(self, params):
-        super(BaseModel, self).__init__()
 
         self.batch_1 = th.nn.BatchNorm2d(64)
         self.batch_2 = th.nn.BatchNorm2d(128)
@@ -87,37 +85,36 @@ class UNet(BaseModel):
         self.softmax = nn.Softmax(dim=1)
 
     def forward(self, input_tensor):
-        
         output_1 = self.cnn1(input_tensor)
-        #output_1 = self.dropout(output_1)
+        # output_1 = self.dropout(output_1)
         output_1 = self.batch_1(output_1)
 
         output_2 = self.cnn2(self.max_pool_2(output_1))
-        #output_2 = self.dropout(output_2)
+        # output_2 = self.dropout(output_2)
         output_2 = self.batch_2(output_2)
-        
+
         output_3 = self.cnn3(self.max_pool_2(output_2))
-        #output_3 = self.dropout(output_3)
+        # output_3 = self.dropout(output_3)
         output_3 = self.batch_3(output_3)
-        
+
         output_4 = self.cnn4(self.max_pool_2(output_3))
-        #output_4 = self.dropout(output_4)
+        # output_4 = self.dropout(output_4)
         output_4 = self.batch_4(output_4)
-        
+
         output_5 = self.cnn5(self.max_pool_2((output_4)))
-        #output_5 = self.dropout(output_5)
+        # output_5 = self.dropout(output_5)
         output_5 = self.batch_5(output_5)
-        
+
         output_1_up = self.cnn1_up(th.cat((self.upconv_1(output_5), output_4), dim=1))
-        #output_1_up = self.dropout(output_1_up)
+        # output_1_up = self.dropout(output_1_up)
         output_1_up = self.batch_4(output_1_up)
 
         output_2_up = self.cnn2_up(th.cat((self.upconv_2(output_1_up), output_3), dim=1))
-        #output_2_up = self.dropout(output_2_up)
+        # output_2_up = self.dropout(output_2_up)
         output_2_up = self.batch_3(output_2_up)
 
         output_3_up = self.cnn3_up(th.cat((self.upconv_3(output_2_up), output_2), dim=1))
-        #output_3_up = self.dropout(output_3_up)
+        # output_3_up = self.dropout(output_3_up)
         output_3_up = self.batch_2(output_3_up)
 
         output = self.cnn4_up(th.cat((self.upconv_4(output_3_up), output_1), dim=1))
@@ -129,9 +126,8 @@ class UNet(BaseModel):
         return output
 
 
-class UNet2(BaseModel):
+class UNet2(nn.Module):
     def __init__(self, params):
-        super(BaseModel, self).__init__()
         self.depth = params['depth']
         self.out_classes = params['out_classes']
 
@@ -145,7 +141,6 @@ class UNet2(BaseModel):
             nn.ReLU()
         )
 
-
         self.start_layers = start_layers
 
         down_blocks = []
@@ -158,21 +153,22 @@ class UNet2(BaseModel):
                     nn.Conv2d(start_layers + init_layers, start_layers + init_layers, kernel_size=3, padding=1,
                               padding_mode=params['padding_mode']),
                     nn.ReLU(),
-                    nn.Dropout(params['dropout_p']),
                     nn.BatchNorm2d(start_layers + init_layers)
                 ),
                 nn.Sequential(
-                    IncResReductionBy2ModuleA(start_layers + init_layers, (2 * start_layers) + init_layers, padding_mode=params['padding_mode'])))
+                    nn.MaxPool2d(2)
+                ))
 
             up_block = UpBlock(
-                nn.Sequential(nn.ConvTranspose2d((start_layers * 2) + init_layers, start_layers + init_layers, 2, stride=2)),
-                nn.Sequential(nn.Conv2d(2 * start_layers + 2 * init_layers, start_layers + init_layers, kernel_size=1, stride=1, padding=0),
+                nn.Sequential(
+                    nn.ConvTranspose2d((start_layers * 2) + init_layers, start_layers + init_layers, 2, stride=2)),
+                nn.Sequential(
+                    nn.Conv2d(2 * start_layers + 2 * init_layers, start_layers + init_layers, kernel_size=1, stride=1,
+                              padding=0),
 
-                              nn.ReLU(),
-                              # InceptionResNetModuleA(start_layers, start_layers, padding_mode=params['padding_mode']),
-                              nn.Dropout(params['dropout_p']),
-                              nn.BatchNorm2d(start_layers + init_layers)
-                              ))
+                    nn.ReLU(),
+                    nn.BatchNorm2d(start_layers + init_layers)
+                    ))
 
             start_layers = 2 * start_layers
 
@@ -183,14 +179,14 @@ class UNet2(BaseModel):
         self.up_blocks = nn.ModuleList(up_blocks)
 
         self.buttom_layer = nn.Sequential(
-            nn.Conv2d(start_layers + init_layers, start_layers + init_layers, kernel_size=3, padding=1, padding_mode=params['padding_mode']),
+            nn.Conv2d(start_layers + init_layers, start_layers + init_layers, kernel_size=3, padding=1,
+                      padding_mode=params['padding_mode']),
             nn.ReLU(),
-            nn.Dropout(params['dropout_p']),
             nn.BatchNorm2d(start_layers + init_layers),
-            nn.Conv2d(start_layers + init_layers, start_layers + init_layers, kernel_size=3, padding=1, padding_mode=params['padding_mode']),
+            nn.Conv2d(start_layers + init_layers, start_layers + init_layers, kernel_size=3, padding=1,
+                      padding_mode=params['padding_mode']),
             nn.ReLU(),
             # InceptionResNetModuleA(start_layers, start_layers, padding_mode=params['padding_mode']),
-            nn.Dropout(params['dropout_p']),
             nn.BatchNorm2d(start_layers + init_layers)
         )
 

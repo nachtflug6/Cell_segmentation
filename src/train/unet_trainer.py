@@ -17,9 +17,13 @@ class UnetTrainer:
         self.train_losses = []
         self.test_losses = []
 
-    def train(self, epochs):
+    def get_losses(self):
+        return self.train_losses, self.test_losses
+
+    def train(self, epochs, test=False):
         for i in range(epochs):
             self.train_epoch()
+            self.test()
 
     def train_epoch(self):
         current_loss = []
