@@ -1,10 +1,11 @@
 import numpy as np
 import torch as th
+from torchmetrics import JaccardIndex
 
 
 class UnetTrainer:
     def __init__(self, model: th.nn.Module, device: th.device, criterion: th.nn.Module, optimizer: th.optim.Optimizer,
-                 ds_train, ds_test):
+                 ds_train, ds_test, binarisation, num_classes=2):
         self.model = model.to(device)
         self.criterion = criterion
         self.optimizer = optimizer
@@ -16,6 +17,7 @@ class UnetTrainer:
         self.epochs = 0
         self.train_losses = []
         self.test_losses = []
+        self.iou = JaccardIndex(num_classes=num_classes)
 
     def get_losses(self):
         return self.train_losses, self.test_losses
@@ -73,9 +75,9 @@ class UnetTrainer:
                 random_target = target.cpu().detach().numpy()
                 random_pred = x_predicted.cpu().detach().numpy()
 
-            loss = self.criterion(x_predicted, target)
+            acc = self.iou(x_predicted, target)
 
-            current_loss.append(th.mean(loss).item())
+            current_loss.append(th.mean(acc).item())
 
         self.test_losses.append(np.mean(current_loss))
 
