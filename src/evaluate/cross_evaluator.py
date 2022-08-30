@@ -6,6 +6,7 @@ from datasets.semantic_dataset import SemanticDataset
 from train.unet_trainer import UnetTrainer
 
 
+
 class CrossTrainEvaluator:
     def __init__(self, model, datasets_path, device, results_path):
         self.model = model
@@ -35,7 +36,8 @@ class CrossTrainEvaluator:
                 ds_train = SemanticDataset(dataset_path, folds_train)
                 ds_validate = SemanticDataset(dataset_path, folds_validate)
                 trainer = UnetTrainer(current_model, self.device, param['criterion'],
-                                      th.optim.Adam(current_model.parameters(), lr=1e-4, weight_decay=1e-5), ds_train, ds_validate)
+                                      th.optim.Adam(current_model.parameters(), lr=1e-4, weight_decay=1e-5),
+                                      ds_train, ds_validate, 1, param['augment_transform'], param['num_augments'], param['out_classes'])
                 trainer.train(num_epochs, test=True)
                 train_loss, validation_loss = trainer.get_losses()
                 train_losses += train_loss
@@ -57,36 +59,36 @@ class CrossTrainEvaluator:
 
         return report
 
-    def evaluate_model(self, params_to_test, num_epochs):
-
-        for train_fold in self.folds:
-            current_model = self.model
-            folds_train = self.folds.copy()
-            folds_train.remove(train_fold)
-            folds_test = [train_fold]
-            best_loss = 10e10
-            best_param = None
-            for param in params_to_test:
-                report = self.evaluate_param(param, folds_train, num_epochs)
-                if report['combined_validate'][-1] < best_loss:
-                    best_param = param
-
-            for i, dataset_path in enumerate(self.datasets_path, 0):
-                train_losses = np.zeros(num_epochs)
-                test_losses = np.zeros(num_epochs)
-                current_model.__init__(best_param)
-                ds_train = SemanticDataset(dataset_path, folds_train)
-                ds_validate = SemanticDataset(dataset_path, folds_test)
-                trainer = UnetTrainer(current_model, self.device, param['criterion'],
-                                      th.optim.Adam(current_model.parameters(), lr=1e-4, weight_decay=1e-5),
-                                      ds_train, ds_validate)
-                trainer.train(num_epochs, test=True)
-                train_loss, validation_loss = trainer.get_losses()
-                train_losses += train_loss
-                test_losses += validation_loss
-
-                train_losses /= len(folds)
-                validation_losses /= len(folds)
-                comb_train_losses += train_losses
-                comb_validation_losses += validation_losses
+    # def evaluate_model(self, params_to_test, num_epochs):
+    #
+    #     for train_fold in self.folds:
+    #         current_model = self.model
+    #         folds_train = self.folds.copy()
+    #         folds_train.remove(train_fold)
+    #         folds_test = [train_fold]
+    #         best_loss = 10e10
+    #         best_param = None
+    #         for param in params_to_test:
+    #             report = self.evaluate_param(param, folds_train, num_epochs)
+    #             if report['combined_validate'][-1] < best_loss:
+    #                 best_param = param
+    #
+    #         for i, dataset_path in enumerate(self.datasets_path, 0):
+    #             train_losses = np.zeros(num_epochs)
+    #             test_losses = np.zeros(num_epochs)
+    #             current_model.__init__(best_param)
+    #             ds_train = SemanticDataset(dataset_path, folds_train)
+    #             ds_validate = SemanticDataset(dataset_path, folds_test)
+    #             trainer = UnetTrainer(current_model, self.device, param['criterion'],
+    #                                   th.optim.Adam(current_model.parameters(), lr=1e-4, weight_decay=1e-5),
+    #                                   ds_train, ds_validate)
+    #             trainer.train(num_epochs, test=True)
+    #             train_loss, validation_loss = trainer.get_losses()
+    #             train_losses += train_loss
+    #             test_losses += validation_loss
+    #
+    #             train_losses /= len(folds)
+    #             validation_losses /= len(folds)
+    #             comb_train_losses += train_losses
+    #             comb_validation_losses += validation_losses
 
