@@ -4,7 +4,7 @@ import torch as th
 
 from datasets.semantic_dataset import SemanticDataset
 from train.unet_trainer import UnetTrainer
-
+from postprocessing.binarization import Binarizer2Class
 
 
 class CrossTrainEvaluator:
@@ -37,7 +37,7 @@ class CrossTrainEvaluator:
                 ds_validate = SemanticDataset(dataset_path, folds_validate)
                 trainer = UnetTrainer(current_model, self.device, param['criterion'],
                                       th.optim.Adam(current_model.parameters(), lr=1e-4, weight_decay=1e-5),
-                                      ds_train, ds_validate, 1, param['augment_transform'], param['num_augments'], param['out_classes'])
+                                      ds_train, ds_validate, param['augment_transform'], param['num_augments'], param['batch_size'], Binarizer2Class(self.device, param['binarizer_lr']), num_classes=param['out_classes'])
                 trainer.train(num_epochs, test=True)
                 train_loss, validation_loss = trainer.get_losses()
                 train_losses += train_loss

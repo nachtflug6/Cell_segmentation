@@ -1,19 +1,38 @@
-# import torch as th
-# import numpy as np
-#
-#
-# class Binarizer:
-#     def __init__(self, dataset, augment_method):
-#         self.dataset = dataset
-#         self.num_data = len(dataset)
-#         self.augment_method = augment_method
-#
-#     def get_loader(self, num_data, batch_size):
-#         aug_ds = []
-#         for i in range(num_data):
-#             img, target = self.dataset[np.random.randint(0, num_data)]
-#             img_aug = self.augment_transform(img)
-#             target_aug = self.augment_transform(target)
-#             aug_ds.append((img_aug, target_aug))
-#
-#         return th.utils.data.DataLoader(batch_size, batch_size=batch_size, shuffle=True)
+import torch as th
+import numpy as np
+from torchmetrics import JaccardIndex
+
+from datasets.semantic_dataset import SemanticDataset
+
+
+class Binarizer2Class:
+    def __init__(self, device, learning_rate, initial_threshold=0.5):
+        self.device = device
+        self.learning_rate = learning_rate
+        self.threshold = initial_threshold
+
+    def train(self, loader):
+        best_acc = 0
+        best_threshold = 0
+        for j in range(int(1 / self.learning_rate)):
+            threshold = j * self.learning_rate
+            iou = JaccardIndex(num_classes=2, threshold=threshold).to(self.device)
+            acc = 0
+            for i, data in enumerate(loader, 0):
+                pred, target = data
+                target = target.to(self.device)
+                pred = pred.to(self.device)
+                acc += iou(target, pred).item()
+            acc /= len(loader)
+            if best_acc < acc:
+                best_acc = acc
+                best_threshold = threshold
+        self.threshold = best_threshold
+
+    def forward(self, prediction):
+        pred = prediction.to(self.device)
+        pred_binary = th.where(pred > self.threshold, 1, 0)
+
+        return pred_binary
+
+

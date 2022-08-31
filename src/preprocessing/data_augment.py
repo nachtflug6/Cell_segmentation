@@ -5,7 +5,7 @@ import numpy as np
 class DataAugmenter:
     def __init__(self, dataset, augment_transform):
         self.dataset = dataset
-        self.num_data = len(dataset)s
+        self.num_data = len(dataset)
         self.augment_transform = augment_transform
 
     def get_loader(self, num_data, batch_size):

@@ -128,7 +128,7 @@ class UNet(nn.Module):
 
 class UNet2(nn.Module):
     def __init__(self, params):
-        super(UNet, self).__init__()
+        super(UNet2, self).__init__()
         self.depth = params['depth']
         self.out_classes = params['out_classes']
 
