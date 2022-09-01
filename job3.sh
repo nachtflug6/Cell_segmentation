@@ -16,6 +16,6 @@ export PATH=/opt/miniconda/bin:$PATH
 
 echo "Running on" $(hostname)
 
-pip install --user -r /cluster/to50jego/Cell_segmentation/cluster_requirements.txt
+pip3 install --user -r /cluster/to50jego/Cell_segmentation/cluster_requirements.txt
 
 python3 ./src/train.py
