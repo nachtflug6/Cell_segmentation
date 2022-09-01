@@ -4,3 +4,4 @@ matplotlib
 PIL
 numpy
 timeit
+os
