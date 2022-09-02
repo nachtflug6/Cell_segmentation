@@ -43,7 +43,7 @@ class SemanticDataset(Dataset):
             if i == 0:
                 new_label[i] = np.where(label == 0, 1, 0)
             else:
-                new_label[i] = np.where(label == 1, 1, 0)
+                new_label[i] = np.where(label > 0, 1, 0)
         label = new_label
         image = np.expand_dims(image, axis=0)
         image = th.from_numpy(image)

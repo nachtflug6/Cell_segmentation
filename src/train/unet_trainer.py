@@ -1,8 +1,10 @@
 import numpy as np
 import torch as th
 from torchmetrics import JaccardIndex
+import matplotlib.pyplot as plt
 
 from preprocessing.data_augment import DataAugmenter
+from utils.plots import *
 
 
 class UnetTrainer:
@@ -29,8 +31,10 @@ class UnetTrainer:
 
     def train(self, epochs, test=False):
         for i in range(epochs):
-            self.train_epoch()
-            self.test()
+            img_train, target_train, pred_train = self.train_epoch()
+            img_test, target_test, pred_test = self.test()
+            plot_performance(img_train[0][0], img_test[0][0], target_train[0][1], target_test[0][1], pred_train[0][1], pred_test[0][1],
+                             self.train_losses, self.test_accs, figsize=(15, 7))
 
     def train_epoch(self):
         self.model.train()
@@ -66,7 +70,7 @@ class UnetTrainer:
 
     def test(self):
         self.model.eval()
-        current_acc = []
+
 
         loader = th.utils.data.DataLoader(self.ds_train, batch_size=self.batch_size, shuffle=True)
         data_binarizer = []
@@ -85,12 +89,14 @@ class UnetTrainer:
 
         random_img = random_target = random_pred = None
 
+        current_acc = []
         for j, data in enumerate(self.testloader, 0):
             img, target = data
             target = target.to(self.device)
             img = img.to(self.device)
 
             x_predicted = self.model.forward(img)
+            x_predicted = self.binarizer.forward(x_predicted)
 
             if j == 0:
                 random_img = img
@@ -99,7 +105,6 @@ class UnetTrainer:
 
             int_target = target.clone().detach().to(th.int32)
             acc = self.iou(x_predicted, int_target)
-
             current_acc.append(th.mean(acc).item())
 
         self.test_accs.append(np.mean(current_acc))
