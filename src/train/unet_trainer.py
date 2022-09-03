@@ -1,19 +1,36 @@
 import numpy as np
 import torch as th
+import torch.nn as nn
+import torch.optim as optim
 from torchmetrics import JaccardIndex
 import matplotlib.pyplot as plt
+from tqdm import tqdm
+import time
 
 from preprocessing.data_augment import DataAugmenter
 from utils.image import save_tensor_to_colormap
 
 
+def get_optimizer(net, optim_param):
+    assert optim_param['type'] in ['sgd', 'adam', 'rmsprop', 'asgd']
+    if optim_param['type'] == 'sgd':
+        optimizer = optim.SGD(net.parameters(), lr=1e-3*optim_param['lr_factor'], weight_decay=optim_param['weight_decay'], momentum=0.99)
+    elif optim_param['type'] == 'adam':
+        optimizer = optim.Adam(net.parameters(), lr=1e-4*optim_param['lr_factor'], weight_decay=optim_param['weight_decay'])
+    elif optim_param['type'] == 'rmsprop':
+        optimizer = optim.RMSprop(net.parameters(), lr=1e-4*optim_param['lr_factor'], weight_decay=optim_param['weight_decay'])
+    else:
+        optimizer = optim.ASGD(net.parameters(), lr=1e-3*optim_param['lr_factor'], weight_decay=optim_param['weight_decay'])
+    return optimizer
+
+
 class UnetTrainer:
-    def __init__(self, model: th.nn.Module, device: th.device, criterion: th.nn.Module, optimizer: th.optim.Optimizer,
+    def __init__(self, model: th.nn.Module, device: th.device, criterion: th.nn.Module, optimizer_param,
                  ds_train, ds_test, augment_transform, num_augments, batch_size, binarizer, id=0, num_classes=2):
         self.model = model.to(device)
         self.id = id
         self.criterion = criterion
-        self.optimizer = optimizer
+        self.optimizer = get_optimizer(model, optimizer_param)
         self.device = device
         self.ds_train = ds_train
         self.ds_test = ds_test
@@ -31,8 +48,8 @@ class UnetTrainer:
         return self.train_losses, self.test_accs
 
     def train(self, epochs, img_output=False, num_images=5, out_folder=None, interval=0):
-        for i in range(epochs):
-            if not img_output or i % interval != 0 or i == 0:
+        for i in tqdm(range(epochs), desc="Training", ascii=False, ncols=75):
+            if not img_output or i == 0 or ((i % interval != 0) and i != epochs - 1):
                 self.train_epoch()
                 self.test()
             else:
@@ -74,7 +91,7 @@ class UnetTrainer:
     def test(self, num_images=0, out_folder=None):
         self.model.eval()
 
-        loader = th.utils.data.DataLoader(self.ds_train, batch_size=self.batch_size, shuffle=True)
+        loader = th.utils.data.DataLoader(self.ds_train, batch_size=1, shuffle=True)
         data_binarizer = []
 
         for j, data in enumerate(loader, 0):
@@ -86,7 +103,7 @@ class UnetTrainer:
             pred_store = x_predicted.clone().detach().to('cpu')
             data_binarizer.append((target_store, pred_store))
 
-        loader = th.utils.data.DataLoader(data_binarizer, batch_size=self.batch_size, shuffle=True)
+        loader = th.utils.data.DataLoader(data_binarizer, batch_size=1, shuffle=True)
         self.binarizer.train(loader)
 
         random_idxs = np.random.permutation(len(loader))[:num_images]

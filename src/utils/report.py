@@ -36,7 +36,7 @@ class GeneralReport:
                                 self.general_report_columns[3]: [self.id]})
         self.general_report = pd.concat((self.general_report, df))
         result_report_name = str(self.id) + '_' + mode + '.csv'
-        result_report.to_csv(os.path.join(self.out_path, result_report_name))
+        result_report.to_csv(os.path.join(self.out_path, result_report_name), index=False)
         self.id += 1
 
     def add_param_report(self, params):

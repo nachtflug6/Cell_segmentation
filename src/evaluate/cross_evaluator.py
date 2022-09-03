@@ -30,14 +30,14 @@ class SemanticCrossEvaluator:
         trainer = UnetTrainer(model,
                               self.device,
                               param['criterion'],
-                              th.optim.Adam(model.parameters(), lr=1e-4, weight_decay=1e-5),
+                              param['optimizer'],
                               ds_train,
                               ds_validate,
                               param['augment_transform'],
                               param['num_augments'],
                               param['batch_size'],
                               Binarizer2Class(self.device, param['binarizer_lr']),
-                              id=folds_validate,
+                              id=folds_validate[0],
                               num_classes=param['out_classes'])
 
         trainer.train(num_epochs,
@@ -51,7 +51,8 @@ class SemanticCrossEvaluator:
     def cross_validate_param(self, param, folds, dataset_path, epochs):
         train_losses = np.zeros(epochs)
         validation_losses = np.zeros(epochs)
-        for train_fold in folds:
+        for i, train_fold in enumerate(folds, 0):
+            print(f'Cross validate: {i} / {len(folds) - 1}')
             folds_train = folds.copy()
             folds_train.remove(train_fold)
             folds_validate = [train_fold]
@@ -75,6 +76,7 @@ class SemanticCrossEvaluator:
         comb_validation_losses = np.zeros(epochs)
 
         for i, dataset_path in enumerate(self.datasets_path, 0):
+            print(f'Evaluating Dataset: {i} / {len(self.datasets_path) - 1}')
             if test:
                 train_losses, validation_losses = self.cross_validate_param(param, folds_train, dataset_path, epochs)
             else:
@@ -104,14 +106,14 @@ class SemanticCrossEvaluator:
         self.report.add_param_report(params)
         final_report = None
         for i, train_fold in enumerate(self.folds, 0):
-            print(f'Testing Fold: {i} / {len(self.folds)}')
+            print(f'Testing Fold: {i} / {len(self.folds) - 1}')
             folds_train = self.folds.copy()
             folds_train.remove(train_fold)
             folds_validate = [train_fold]
             best_param = None
             best_acc = 0
             for j, param in enumerate(params, 0):
-                print(f'Evaluating Param: {j} / {len(params)}')
+                print(f'Evaluating Param: {j} / {len(params) - 1}')
                 report = self.evaluate_param(param, folds_train, folds_validate, epochs_cv, test=True)
                 if len(report['combined_validate']) > 10:
                     current_acc = np.mean(report['combined_validate'][10:])
