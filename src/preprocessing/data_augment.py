@@ -8,10 +8,10 @@ class DataAugmenter:
         self.num_data = len(dataset)
         self.augment_transform = augment_transform
 
-    def get_loader(self, num_data, batch_size):
+    def get_loader(self, num_augments, batch_size):
         aug_ds = []
-        for i in range(num_data):
-            img, target = self.dataset[np.random.randint(0, num_data)]
+        for i in range(num_augments):
+            img, target = self.dataset[np.random.randint(0, self.num_data)]
             img_aug = self.augment_transform(img)
             target_aug = self.augment_transform(target)
             aug_ds.append((img_aug, target_aug))

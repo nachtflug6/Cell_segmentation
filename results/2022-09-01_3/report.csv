@@ -1,4 +1,0 @@
-padding_mode,depth,start_layers,dim_multiplier,input_conv_kernel_size,out_classes,criterion,optimizer,augment_transform,num_augments,binarizer_lr,batch_size
-zeros,3,32,2,3,2,CrossEntropyLoss(),1,"Compose(
-    RandomVerticalFlip(p=0.5)
-)",10,0.05,1
