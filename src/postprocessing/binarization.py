@@ -31,7 +31,7 @@ class Binarizer2Class:
 
     def forward(self, prediction):
         pred = prediction.to(self.device)
-        pred_binary = th.where(pred > self.threshold, 1, 0)
+        pred_binary = th.where(pred > self.threshold, 1.0, 0.0).to(th.float32)
 
         return pred_binary
 

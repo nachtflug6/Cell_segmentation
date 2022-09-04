@@ -126,8 +126,8 @@ class UnetTrainer:
                     save_tensor_to_colormap(x_predicted.cpu().detach().numpy()[0][1], out_folder, name + 'pre.png')
                     counter += 1
 
-            int_target = target.clone().detach().to(th.int32)
-            acc = self.iou(x_predicted, int_target)
+            #int_target = target.clone().detach().to(th.int32)
+            acc = self.iou(x_predicted, target)
             current_acc.append(th.mean(acc).item())
 
         self.test_accs.append(np.mean(current_acc))
