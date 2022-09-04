@@ -19,8 +19,8 @@ cv_param = {'interval_img_out': 13,
             'datasets_path': [ds1_path, ds2_path],
             'results_path': os.path.join(cwd, '../to50jego/Cell_segmentation/results'),
             'folds': [0, 1, 2, 3],
-            'epochs_cv': 100,
-            'epochs_ct': 10}
+            'epochs_cv': 1,
+            'epochs_ct': 1}
 
 param = {'id': 0,
          'padding_mode': 'reflect',
@@ -38,7 +38,7 @@ param = {'id': 0,
          'batch_size': 2}
 
 unet_hyps = MultiHyperparameter(param)
-params = unet_hyps.get_random_params(3)
+params = unet_hyps.get_random_params(1)
 unet = UNet.__new__(UNet)
 
 cte = SemanticCrossEvaluator(unet, cv_param)
