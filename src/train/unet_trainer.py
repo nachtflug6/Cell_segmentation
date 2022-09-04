@@ -118,6 +118,10 @@ class UnetTrainer:
             x_predicted = self.model.forward(img)
             x_predicted = self.binarizer.forward(x_predicted)
 
+            name = str(self.id) + '_' + str(self.epochs) + '_' + str(counter) + '_ts_'
+            save_tensor_to_colormap(img.cpu().detach().numpy()[0][0], out_folder, name + 'img.png')
+            save_tensor_to_colormap(target.cpu().detach().numpy()[0], out_folder, name + 'tar.png')
+            save_tensor_to_colormap(x_predicted.cpu().detach().numpy()[0][1], out_folder, name + 'pre.png')
             if num_images > 0:
                 if j in random_idxs:
                     name = str(self.id) + '_' + str(self.epochs) + '_' + str(counter) + '_ts_'
