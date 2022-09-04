@@ -50,10 +50,8 @@ class UnetTrainer:
     def train(self, epochs, img_output=False, num_images=5, out_folder=None, interval=0):
         for i in tqdm(range(epochs), desc="Training", ascii=False, ncols=75):
             if not img_output or i == 0 or ((i % interval != 0) and i != epochs - 1):
-                # self.train_epoch()
-                # self.test()
-                self.train_epoch(num_images=num_images, out_folder=out_folder)
-                self.test(num_images=num_images, out_folder=out_folder)
+                self.train_epoch()
+                self.test()
             else:
                 self.train_epoch(num_images=num_images, out_folder=out_folder)
                 self.test(num_images=num_images, out_folder=out_folder)
