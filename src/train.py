@@ -14,14 +14,14 @@ print(cwd)
 ds1_path = os.path.join(cwd, '/cluster/to50jego/Cell_segmentation/data/cell_type_1')
 ds2_path = os.path.join(cwd, '/cluster/to50jego/Cell_segmentation/data/cell_type_2')
 
-cv_param = {'interval_img_out': 13,
+cv_param = {'interval_img_out': 50,
             'num_images': 3,
             'device': th.device("cuda" if th.cuda.is_available() else "cpu"),
             'datasets_path': [ds1_path, ds2_path],
             'results_path': os.path.join(cwd, '/cluster/to50jego/Cell_segmentation/results'),
             'folds': [0, 1, 2, 3],
-            'epochs_cv': 1,
-            'epochs_ct': 1}
+            'epochs_cv': 100,
+            'epochs_ct': 100}
 
 param = {'id': 0,
          'padding_mode': 'reflect',
