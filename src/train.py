@@ -37,10 +37,9 @@ param = {'id': 0,
          'binarizer_lr': 0.05,
          'batch_size': 2}
 
-# print(MultiHyperparameter({'type': ['sgd', 'adam', 'rmsprop', 'asgd'], 'lr_factor': [0.5, 0.75, 1, 1.25, 1.5], 'weight_decay': [0, 1e-3, 1e-5]}).get_full_grid_params()[0])
-
 unet_hyps = MultiHyperparameter(param)
 params = unet_hyps.get_random_params(3)
 unet = UNet.__new__(UNet)
-#
-# models_to_evaluate = [(unet, unet_hyps)]
+
+cte = SemanticCrossEvaluator(unet, cv_param)
+report = cte.cross_test_model(params, cv_param['epochs_ct'], cv_param['epochs_cv'])
