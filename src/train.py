@@ -27,7 +27,7 @@ param = {'id': 0,
          'padding_mode': 'reflect',
          'out_classes': 2,
          'criterion': nn.CrossEntropyLoss(),
-         'optimizer': MultiHyperparameter({'type': ['sgd'#, 'adam', 'rmsprop', 'asgd'
+         'optimizer': MultiHyperparameter({'type': ['sgd', 'adam', 'rmsprop', 'asgd'
                                                     ], 'lr_factor': [0.5, 0.75, 1, 1.25, 1.5], 'weight_decay': [0, 1e-3, 1e-5]}).get_full_grid_params(),
          'augment_transform': [{'rotate': False, 'mirror': False, 'translate': False, 'pad': 0},
                                # {'rotate': True, 'mirror': True, 'translate': False, 'pad': 0},
@@ -39,7 +39,7 @@ param = {'id': 0,
          'batch_size': 2}
 
 unet_hyps = MultiHyperparameter(param)
-params = unet_hyps.get_random_params(1)
+params = unet_hyps.get_random_params(5)
 unet = UNet.__new__(UNet)
 
 cte = SemanticCrossEvaluator(unet, cv_param)
