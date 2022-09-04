@@ -10,14 +10,14 @@ from evaluate.cross_evaluator import SemanticCrossEvaluator
 from train.multi_hyperparameter import MultiHyperparameter
 
 cwd = os.getcwd()
-ds1_path = os.path.join(cwd, '../to50jego/Cell_segmentation/data/cell_type_1')
-ds2_path = os.path.join(cwd, '../to50jego/Cell_segmentation/data/cell_type_2')
+ds1_path = os.path.join(cwd, '../data/cell_type_1')
+ds2_path = os.path.join(cwd, '../data/cell_type_2')
 
 cv_param = {'interval_img_out': 13,
             'num_images': 3,
             'device': th.device("cuda" if th.cuda.is_available() else "cpu"),
             'datasets_path': [ds1_path, ds2_path],
-            'results_path': os.path.join(cwd, '../to50jego/Cell_segmentation/results'),
+            'results_path': os.path.join(cwd, '../results'),
             'folds': [0, 1, 2, 3],
             'epochs_cv': 1,
             'epochs_ct': 1}
