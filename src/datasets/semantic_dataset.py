@@ -35,11 +35,11 @@ class SemanticDataset(Dataset):
         folder_img = self.img_label_df.iloc[idx, 0].split('\\')
         img_path = os.path.join(self.ds_dir, folder_img[0], folder_img[1])
         image = tif.imread(img_path)
-        image = np.asarray(image, dtype=np.float32)
+        image = np.asarray(image, dtype=np.float64)
         folder_label = self.img_label_df.iloc[idx, 1].split('\\')
         label_path = os.path.join(self.ds_dir, folder_label[0], folder_label[1])
         label = tif.imread(label_path)
-        label = np.asarray(label, dtype=np.float32)
+        label = np.asarray(label, dtype=np.float64)
         new_label = np.zeros((2, *label.shape))
         for i in range(2):
             if i == 0:
