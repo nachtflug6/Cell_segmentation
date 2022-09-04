@@ -78,8 +78,8 @@ class UnetTrainer:
                     save_tensor_to_colormap(target.cpu().detach().numpy()[0], out_folder, name + 'tar.png')
                     save_tensor_to_colormap(x_predicted.cpu().detach().numpy()[0][1], out_folder, name + 'pre.png')
                     counter += 1
-            # print('target:', target.shape)
-            # print('pred:', x_predicted.shape)
+            print('target:', target.shape)
+            print('pred:', x_predicted.shape)
             loss = self.criterion(x_predicted, target)
 
             self.optimizer.zero_grad()
