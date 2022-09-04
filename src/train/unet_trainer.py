@@ -69,8 +69,7 @@ class UnetTrainer:
             img, target = data
             target = target.to(self.device)
             img = img.to(self.device)
-            # print('Img:', target.type())
-            # print('target:', img.type())
+
             x_predicted = self.model.forward(img)
             if num_images > 0:
                 if j in random_idxs:
@@ -79,7 +78,8 @@ class UnetTrainer:
                     save_tensor_to_colormap(target.cpu().detach().numpy()[0][1], out_folder, name + 'tar.png')
                     save_tensor_to_colormap(x_predicted.cpu().detach().numpy()[0][1], out_folder, name + 'pre.png')
                     counter += 1
-
+            print('target:', target.type())
+            print('pred:', x_predicted.type())
             loss = self.criterion(x_predicted, target)
 
             self.optimizer.zero_grad()
