@@ -48,8 +48,10 @@ class SemanticDataset(Dataset):
                 new_label[i] = np.where(label > 0, 1, 0)
         label = new_label
         image = np.expand_dims(image, axis=0)
-        image = th.from_numpy(image)
-        label = th.from_numpy(label)
+        image = th.from_numpy(image).to(th.float32)
+        label = th.from_numpy(label).to(th.float32)
+
+
         if self.transform:
             image = self.transform(image)
         if self.target_transform:
