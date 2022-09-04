@@ -50,8 +50,10 @@ class UnetTrainer:
     def train(self, epochs, img_output=False, num_images=5, out_folder=None, interval=0):
         for i in tqdm(range(epochs), desc="Training", ascii=False, ncols=75):
             if not img_output or i == 0 or ((i % interval != 0) and i != epochs - 1):
-                self.train_epoch()
-                self.test()
+                # self.train_epoch()
+                # self.test()
+                self.train_epoch(num_images=num_images, out_folder=out_folder)
+                self.test(num_images=num_images, out_folder=out_folder)
             else:
                 self.train_epoch(num_images=num_images, out_folder=out_folder)
                 self.test(num_images=num_images, out_folder=out_folder)
@@ -118,10 +120,6 @@ class UnetTrainer:
             x_predicted = self.model.forward(img)
             x_predicted = self.binarizer.forward(x_predicted)
 
-            name = str(self.id) + '_' + str(self.epochs) + '_' + str(counter) + '_ts_'
-            save_tensor_to_colormap(img.cpu().detach().numpy()[0][0], out_folder, name + 'img.png')
-            save_tensor_to_colormap(target.cpu().detach().numpy()[0], out_folder, name + 'tar.png')
-            save_tensor_to_colormap(x_predicted.cpu().detach().numpy()[0][1], out_folder, name + 'pre.png')
             if num_images > 0:
                 if j in random_idxs:
                     name = str(self.id) + '_' + str(self.epochs) + '_' + str(counter) + '_ts_'
