@@ -69,6 +69,8 @@ class UnetTrainer:
             img, target = data
             target = target.to(self.device)
             img = img.to(self.device)
+            print('Img:', target.type())
+            print('target:', img.type())
             x_predicted = self.model.forward(img)
             if num_images > 0:
                 if j in random_idxs:
