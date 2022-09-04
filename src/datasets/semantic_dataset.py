@@ -35,22 +35,22 @@ class SemanticDataset(Dataset):
         folder_img = self.img_label_df.iloc[idx, 0].split('\\')
         img_path = os.path.join(self.ds_dir, folder_img[0], folder_img[1])
         image = tif.imread(img_path)
-        image = np.asarray(image, dtype=np.float64)
+        image = np.asarray(image, dtype=np.float32)
         folder_label = self.img_label_df.iloc[idx, 1].split('\\')
         label_path = os.path.join(self.ds_dir, folder_label[0], folder_label[1])
         label = tif.imread(label_path)
-        label = np.asarray(label, dtype=np.float64)
-        new_label = np.zeros((2, *label.shape))
-        for i in range(2):
-            if i == 0:
-                new_label[i] = np.where(label == 0, 1, 0)
-            else:
-                new_label[i] = np.where(label > 0, 1, 0)
-        label = new_label
+        label = np.asarray(label, dtype=np.int64)
+        label = np.where(label > 0, 1, 0)
+        # new_label = np.zeros((2, *label.shape))
+        # for i in range(2):
+        #     if i == 0:
+        #         new_label[i] = np.where(label == 0, 1, 0)
+        #     else:
+        #         new_label[i] = np.where(label > 0, 1, 0)
+        # label = new_label
         image = np.expand_dims(image, axis=0)
         image = th.from_numpy(image).to(th.float32)
         label = th.from_numpy(label).to(th.long)
-
 
         if self.transform:
             image = self.transform(image)
