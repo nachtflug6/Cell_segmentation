@@ -20,7 +20,7 @@ cv_param = {'interval_img_out': 50,
             'datasets_path': [ds1_path, ds2_path],
             'results_path': os.path.join(cwd, '/cluster/to50jego/Cell_segmentation/results'),
             'folds': [0, 1, 2, 3],
-            'epochs_cv': 100,
+            'epochs_cv': 40,
             'epochs_ct': 100}
 
 param = {'id': 0,
@@ -36,7 +36,7 @@ param = {'id': 0,
                                ],
          'num_augments': 100,
          'binarizer_lr': 0.05,
-         'batch_size': 2}
+         'batch_size': 3}
 
 unet_hyps = MultiHyperparameter(param)
 params = unet_hyps.get_random_params(5)

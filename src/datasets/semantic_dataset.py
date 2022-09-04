@@ -41,16 +41,16 @@ class SemanticDataset(Dataset):
         label = tif.imread(label_path)
         label = np.asarray(label, dtype=np.int64)
         label = np.where(label > 0, 1, 0)
-        # new_label = np.zeros((2, *label.shape))
-        # for i in range(2):
-        #     if i == 0:
-        #         new_label[i] = np.where(label == 0, 1, 0)
-        #     else:
-        #         new_label[i] = np.where(label > 0, 1, 0)
-        # label = new_label
+        new_label = np.zeros((2, *label.shape))
+        for i in range(2):
+            if i == 0:
+                new_label[i] = np.where(label == 0, 1, 0)
+            else:
+                new_label[i] = np.where(label > 0, 1, 0)
+        label = new_label
         image = np.expand_dims(image, axis=0)
         image = th.from_numpy(image).to(th.float32)
-        label = th.from_numpy(label).to(th.long)
+        label = th.from_numpy(label).to(th.float32) #long
 
         if self.transform:
             image = self.transform(image)

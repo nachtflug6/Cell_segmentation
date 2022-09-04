@@ -50,11 +50,12 @@ class UnetTrainer:
     def train(self, epochs, img_output=False, num_images=5, out_folder=None, interval=0):
         for i in tqdm(range(epochs), desc="Training", ascii=False, ncols=75):
             if not img_output or i == 0 or ((i % interval != 0) and i != epochs - 1):
-                self.train_epoch()
-                self.test()
+                loss = self.train_epoch()
+                acc = self.test()
             else:
-                self.train_epoch(num_images=num_images, out_folder=out_folder)
-                self.test(num_images=num_images, out_folder=out_folder)
+                loss = self.train_epoch(num_images=num_images, out_folder=out_folder)
+                acc = self.test(num_images=num_images, out_folder=out_folder)
+            print('Loss:', loss, 'Acc:', acc)
 
     def train_epoch(self, num_images=0, out_folder=None):
         self.model.train()
@@ -75,10 +76,12 @@ class UnetTrainer:
                 if j in random_idxs:
                     name = str(self.id) + '_' + str(self.epochs) + '_' + str(counter) + '_tr_'
                     save_tensor_to_colormap(img.cpu().detach().numpy()[0][0], out_folder, name + 'img.png')
-                    save_tensor_to_colormap(target.cpu().detach().numpy()[0], out_folder, name + 'tar.png')
+                    save_tensor_to_colormap(target.cpu().detach().numpy()[0][1], out_folder, name + 'tar.png')
                     save_tensor_to_colormap(x_predicted.cpu().detach().numpy()[0][1], out_folder, name + 'pre.png')
                     counter += 1
-            loss = self.criterion(x_predicted, target)
+
+            target_int = target[:, 1, :, :].to(th.long)
+            loss = self.criterion(x_predicted, target_int)
 
             self.optimizer.zero_grad()
             loss.backward()
@@ -86,7 +89,9 @@ class UnetTrainer:
 
             current_loss.append(th.mean(loss).item())
 
+        loss = np.mean(current_loss)
         self.train_losses.append(np.mean(current_loss))
+        return loss
 
     def test(self, num_images=0, out_folder=None):
         self.model.eval()
@@ -116,18 +121,22 @@ class UnetTrainer:
             img = img.to(self.device)
 
             x_predicted = self.model.forward(img)
+            #print(x_predicted, th.sum(x_predicted))
             x_predicted = self.binarizer.forward(x_predicted)
+            #print(x_predicted, th.sum(x_predicted))
 
             if num_images > 0:
                 if j in random_idxs:
                     name = str(self.id) + '_' + str(self.epochs) + '_' + str(counter) + '_ts_'
                     save_tensor_to_colormap(img.cpu().detach().numpy()[0][0], out_folder, name + 'img.png')
-                    save_tensor_to_colormap(target.cpu().detach().numpy()[0], out_folder, name + 'tar.png')
+                    save_tensor_to_colormap(target.cpu().detach().numpy()[0][1], out_folder, name + 'tar.png')
                     save_tensor_to_colormap(x_predicted.cpu().detach().numpy()[0][1], out_folder, name + 'pre.png')
                     counter += 1
 
-            #int_target = target.clone().detach().to(th.int32)
-            acc = self.iou(x_predicted, target)
+            int_target = target.clone().detach().to(th.int32)
+            acc = self.iou(x_predicted, int_target)
             current_acc.append(th.mean(acc).item())
 
-        self.test_accs.append(np.mean(current_acc))
+        acc = np.mean(current_acc)
+        self.test_accs.append(acc)
+        return acc
