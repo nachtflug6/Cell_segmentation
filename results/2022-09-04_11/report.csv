@@ -1,4 +1,0 @@
-id,padding_mode,out_classes,criterion,optimizer,augment_transform,num_augments,binarizer_lr,batch_size
-0,reflect,2,CrossEntropyLoss(),"{'type': 'sgd', 'lr_factor': 0.5, 'weight_decay': 0.001}","{'rotate': False, 'mirror': False, 'translate': False, 'pad': 0}",100,0.05,1
-0,reflect,2,CrossEntropyLoss(),"{'type': 'sgd', 'lr_factor': 1, 'weight_decay': 1e-05}","{'rotate': False, 'mirror': False, 'translate': False, 'pad': 0}",100,0.05,1
-0,reflect,2,CrossEntropyLoss(),"{'type': 'sgd', 'lr_factor': 1.5, 'weight_decay': 0}","{'rotate': False, 'mirror': False, 'translate': False, 'pad': 0}",100,0.05,1
