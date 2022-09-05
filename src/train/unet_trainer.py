@@ -14,11 +14,11 @@ from utils.image import save_tensor_to_colormap
 def get_optimizer(net, optim_param):
     assert optim_param['type'] in ['sgd', 'adam', 'rmsprop', 'asgd']
     if optim_param['type'] == 'sgd':
-        optimizer = optim.SGD(net.parameters(), lr=1e-3*optim_param['lr_factor'], weight_decay=optim_param['weight_decay'], momentum=0.99)
+        optimizer = optim.SGD(net.parameters(), lr=1e-4*optim_param['lr_factor'], weight_decay=optim_param['weight_decay'])#, momentum=0.99)
     elif optim_param['type'] == 'adam':
         optimizer = optim.Adam(net.parameters(), lr=1e-4*optim_param['lr_factor'], weight_decay=optim_param['weight_decay'])
     elif optim_param['type'] == 'rmsprop':
-        optimizer = optim.RMSprop(net.parameters(), lr=1e-4*optim_param['lr_factor'], weight_decay=optim_param['weight_decay'])
+        optimizer = optim.RMSprop(net.parameters(), lr=1e-5*optim_param['lr_factor'], weight_decay=optim_param['weight_decay'])
     else:
         optimizer = optim.ASGD(net.parameters(), lr=1e-3*optim_param['lr_factor'], weight_decay=optim_param['weight_decay'])
     return optimizer
@@ -35,12 +35,12 @@ class UnetTrainer:
         self.ds_train = ds_train
         self.ds_test = ds_test
         self.data_augmenter = DataAugmenter(ds_train, augment_transform)
-        self.testloader = th.utils.data.DataLoader(ds_test, batch_size=batch_size, shuffle=True)
+        self.testloader = th.utils.data.DataLoader(ds_test, batch_size=1, shuffle=True)
         self.epochs = 0
         self.num_data = num_augments
         self.train_losses = []
         self.test_accs = []
-        self.iou = JaccardIndex(num_classes=num_classes).to(device)
+        self.iou = JaccardIndex(num_classes=num_classes, average='none').to(device)
         self.binarizer = binarizer
         self.batch_size = batch_size
 
@@ -104,8 +104,8 @@ class UnetTrainer:
             target = target.to(self.device)
             img = img.to(self.device)
             x_predicted = self.model.forward(img)
-            target_store = target.clone().detach().to('cpu').to(th.int32)
-            pred_store = x_predicted.clone().detach().to('cpu')
+            target_store = target[0].clone().detach().to('cpu').to(th.int32)
+            pred_store = x_predicted[0].clone().detach().to('cpu')
             data_binarizer.append((target_store, pred_store))
 
         loader = th.utils.data.DataLoader(data_binarizer, batch_size=1, shuffle=True)
@@ -114,16 +114,14 @@ class UnetTrainer:
         random_idxs = np.random.permutation(len(loader))[:num_images]
         counter = 0
 
-        current_acc = []
+        current_acc = 0
         for j, data in enumerate(self.testloader, 0):
             img, target = data
             target = target.to(self.device)
             img = img.to(self.device)
 
             x_predicted = self.model.forward(img)
-            #print(x_predicted, th.sum(x_predicted))
             x_predicted = self.binarizer.forward(x_predicted)
-            #print(x_predicted, th.sum(x_predicted))
 
             if num_images > 0:
                 if j in random_idxs:
@@ -134,9 +132,13 @@ class UnetTrainer:
                     counter += 1
 
             int_target = target.clone().detach().to(th.int32)
-            acc = self.iou(x_predicted, int_target)
-            current_acc.append(th.mean(acc).item())
+            pred = x_predicted
+            int_target = int_target[0, 1]
+            pred = pred[0, 1]
+            acc = self.iou(pred, int_target)
+            current_acc += acc[1]
 
-        acc = np.mean(current_acc)
+        acc = current_acc / len(self.testloader)
+        acc = acc.item()
         self.test_accs.append(acc)
         return acc

@@ -16,13 +16,15 @@ class Binarizer2Class:
         best_threshold = 0
         for j in range(int(1 / self.learning_rate)):
             threshold = j * self.learning_rate
-            iou = JaccardIndex(num_classes=2, threshold=threshold).to(self.device)
+            iou = JaccardIndex(num_classes=2, threshold=threshold, average='none').to(self.device)
             acc = 0
             for i, data in enumerate(loader, 0):
                 pred, target = data
                 target = target.to(self.device)
                 pred = pred.to(self.device)
-                acc += iou(target, pred).item()
+                target = target[0, 1]
+                pred = pred[0, 1]
+                acc += iou(target, pred)[1]
             acc /= len(loader)
             if best_acc < acc:
                 best_acc = acc

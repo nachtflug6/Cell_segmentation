@@ -14,33 +14,48 @@ print(cwd)
 ds1_path = os.path.join(cwd, '/cluster/to50jego/Cell_segmentation/data/cell_type_1')
 ds2_path = os.path.join(cwd, '/cluster/to50jego/Cell_segmentation/data/cell_type_2')
 
-cv_param = {'interval_img_out': 50,
+cv_param = {'interval_img_out': 1,
             'num_images': 3,
             'device': th.device("cuda" if th.cuda.is_available() else "cpu"),
             'datasets_path': [ds1_path, ds2_path],
-            'results_path': os.path.join(cwd, '/cluster/to50jego/Cell_segmentation/results'),
+            'results_path': os.path.join(cwd, '../results'),
             'folds': [0, 1, 2, 3],
-            'epochs_cv': 1,
-            'epochs_ct': 1}
+            'epochs_cv': 40,
+            'epochs_ct': 100,
+            'num_random_params': 3}
 
 param = {'id': 0,
          'padding_mode': 'reflect',
          'out_classes': 2,
          'criterion': nn.CrossEntropyLoss(),
-         'optimizer': MultiHyperparameter({'type': ['sgd', 'adam', 'rmsprop', 'asgd'
-                                                    ], 'lr_factor': [0.5, 0.75, 1, 1.25, 1.5], 'weight_decay': [0, 1e-3, 1e-5]}).get_full_grid_params(),
+         'optimizer': MultiHyperparameter({'type': [ 'sgd',
+             #'adam',
+             #'rmsprop',
+             #'asgd'
+         ],
+             'lr_factor': [
+                 1.5,
+                 1,
+                 0.5
+             ],
+             'weight_decay': [0,
+                              #1e-3,
+                              #1e-5
+                              ]
+         }).get_full_grid_params(),
          'augment_transform': [{'rotate': False, 'mirror': False, 'translate': False, 'pad': 0},
-                               # {'rotate': True, 'mirror': True, 'translate': False, 'pad': 0},
-                               # {'rotate': True, 'mirror': True, 'translate': True, 'pad': 16},
-                               # {'rotate': True, 'mirror': True, 'translate': True, 'pad': 64}
+                               #{'rotate': True, 'mirror': True, 'translate': False, 'pad': 0},
+                               #{'rotate': True, 'mirror': True, 'translate': True, 'pad': 16},
+                               #{'rotate': True, 'mirror': True, 'translate': True, 'pad': 8}
                                ],
          'num_augments': 100,
-         'binarizer_lr': 0.05,
-         'batch_size': 3}
+         'binarizer_lr': 0.02,
+         'batch_size': 2}
 
 unet_hyps = MultiHyperparameter(param)
-params = unet_hyps.get_random_params(3)
+params = unet_hyps.get_full_grid_params()
+print(len(params))
 unet = UNet.__new__(UNet)
-
-cte = SemanticCrossEvaluator(unet, cv_param)
-report = cte.cross_test_model(params, cv_param['epochs_ct'], cv_param['epochs_cv'])
+#
+# cte = SemanticCrossEvaluator(unet, cv_param)
+# report = cte.cross_test_model(params, cv_param['epochs_ct'], cv_param['epochs_cv'])

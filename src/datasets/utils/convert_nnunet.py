@@ -7,14 +7,12 @@ from nnunet.dataset_conversion.utils import generate_dataset_json
 import format_dataset
 
 
-def convert_ds_nnunet(ds_path, export_path, dataset_name, num_task):
+def convert_ds_nnunet(ds_path, export_path, dataset_name, num_task, fold):
 
     data_path = os.path.join(ds_path, 'data.csv')
 
     if os.path.isfile(data_path):
         df = pd.read_csv(data_path)
-    else:
-        df = create_csv.create_semantic_csv(ds_path)
 
     dirname = 'Task' + str(num_task) + '_' + dataset_name
     dir_path = os.path.join(export_path, dirname)
@@ -51,7 +49,7 @@ def convert_ds_nnunet(ds_path, export_path, dataset_name, num_task):
                           labels={0: 'background', 1: 'cell'}, dataset_name=dataset_name, license='poly')
 
 cwd = os.getcwd()
-ds_path = os.path.join(cwd, '../../data/cell_type_2_3d')
+ds_path = os.path.join(cwd, '../../data/cell_type_2')
 ds_path_export = os.path.join(cwd, '../../../../nnUnet/nnUNet_raw_data_base/nnUNet_raw_data')
 
 convert_ds_nnunet(ds_path, ds_path_export, 'test', 510)
