@@ -20,8 +20,8 @@ cv_param = {'interval_img_out': 50,
             'datasets_path': [ds1_path, ds2_path],
             'results_path': os.path.join(cwd, '/cluster/to50jego/Cell_segmentation/results'),
             'folds': [0, 1, 2, 3],
-            'epochs_cv': 40,
-            'epochs_ct': 100}
+            'epochs_cv': 1,
+            'epochs_ct': 1}
 
 param = {'id': 0,
          'padding_mode': 'reflect',
