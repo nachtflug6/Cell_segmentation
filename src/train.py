@@ -39,7 +39,7 @@ param = {'id': 0,
          'batch_size': 3}
 
 unet_hyps = MultiHyperparameter(param)
-params = unet_hyps.get_random_params(5)
+params = unet_hyps.get_random_params(3)
 unet = UNet.__new__(UNet)
 
 cte = SemanticCrossEvaluator(unet, cv_param)
