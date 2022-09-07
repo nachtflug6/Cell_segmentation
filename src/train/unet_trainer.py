@@ -58,7 +58,7 @@ class UnetTrainer:
                 acc = self.test(num_images=num_images, out_folder=out_folder)
             if i == 0:
                 init_acc = acc
-            if i == 7 and (acc < 0.1 or (1.1 > (acc / init_acc) > 0.9)):
+            if i == 10 and (acc < 0.1 or (1.1 > (acc / init_acc) > 0.9)):
                 self.train_losses = np.zeros(epochs)
                 self.test_accs = np.zeros(epochs)
                 print('Aborting')

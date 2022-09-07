@@ -62,5 +62,5 @@ params = unet_hyps.get_full_grid_params()
 print(len(params))
 unet = UNet.__new__(UNet)
 
-cte = SemanticCrossEvaluator(unet, cv_param)
+cte = SemanticCrossEvaluator(unet, cv_param, 3)
 report = cte.cross_test_model(params, cv_param['epochs_ct'], cv_param['epochs_cv'])
