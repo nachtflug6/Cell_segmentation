@@ -58,7 +58,7 @@ param = {'id': 0,
          'batch_size': 2}
 
 unet_hyps = MultiHyperparameter(param)
-params = unet_hyps.get_full_grid_params()
+params = unet_hyps.get_full_grid_params(indexed=True)
 print(len(params))
 unet = UNet.__new__(UNet)
 
