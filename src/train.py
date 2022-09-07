@@ -28,8 +28,8 @@ param = {'id': 0,
          'padding_mode': 'reflect',
          'out_classes': 2,
          'criterion': nn.CrossEntropyLoss(),
-         'optimizer': MultiHyperparameter({'type': [ 'sgd',
-             #'adam',
+         'optimizer': MultiHyperparameter({'type': [ #'sgd',
+             'adam',
              #'rmsprop',
              #'asgd'
          ],
@@ -58,4 +58,4 @@ print(len(params))
 unet = UNet.__new__(UNet)
 #
 cte = SemanticCrossEvaluator(unet, cv_param)
-report = cte.cross_test_model([params[0]], cv_param['epochs_ct'], cv_param['epochs_cv'])
+report = cte.cross_test_model(params, cv_param['epochs_ct'], cv_param['epochs_cv'])
