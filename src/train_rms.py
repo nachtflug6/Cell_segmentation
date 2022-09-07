@@ -20,7 +20,7 @@ cv_param = {'interval_img_out': 100,
             'datasets_path': [ds1_path, ds2_path],
             'results_path': os.path.join(cwd, '../to50jego/Cell_segmentation/results'),
             'folds': [0, 1, 2, 3],
-            'epochs_cv': 10,
+            'epochs_cv': 12,
             'epochs_ct': 100,
             'num_random_params': 3}
 
