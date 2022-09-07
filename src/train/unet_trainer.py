@@ -48,14 +48,24 @@ class UnetTrainer:
         return self.train_losses, self.test_accs
 
     def train(self, epochs, img_output=False, num_images=5, out_folder=None, interval=0):
+        init_acc = 0
         for i in tqdm(range(epochs), desc="Training", ascii=False, ncols=75):
-            if not img_output or i == 0 or ((i % interval != 0) and i != epochs - 1):
+            if not img_output or i != epochs - 1 or i < 10:
                 loss = self.train_epoch()
                 acc = self.test()
             else:
                 loss = self.train_epoch(num_images=num_images, out_folder=out_folder)
                 acc = self.test(num_images=num_images, out_folder=out_folder)
+            if i == 0:
+                init_acc = acc
+            if i == 7 and (acc < 0.1 or (1.1 > (acc / init_acc) > 0.9)):
+                self.train_losses = np.zeros(epochs)
+                self.test_accs = np.zeros(epochs)
+                print('Aborting')
+                return False
+
             print('Loss:', loss, 'Acc:', acc)
+        return True
 
     def train_epoch(self, num_images=0, out_folder=None):
         self.model.train()
