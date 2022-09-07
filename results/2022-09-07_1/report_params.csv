@@ -1,0 +1,22 @@
+id,padding_mode,out_classes,criterion,optimizer,augment_transform,num_augments,binarizer_lr,batch_size,failed
+20,reflect,2,CrossEntropyLoss(),"{'type': 'adam', 'lr_factor': 0.1, 'weight_decay': 1e-05}","{'rotate': False, 'mirror': False, 'translate': False, 'pad': 0}",100,0.1,2,True
+1,reflect,2,CrossEntropyLoss(),"{'type': 'adam', 'lr_factor': 4, 'weight_decay': 0}","{'rotate': False, 'mirror': False, 'translate': False, 'pad': 0}",100,0.1,2,False
+2,reflect,2,CrossEntropyLoss(),"{'type': 'adam', 'lr_factor': 2, 'weight_decay': 0}","{'rotate': False, 'mirror': False, 'translate': False, 'pad': 0}",100,0.1,2,False
+3,reflect,2,CrossEntropyLoss(),"{'type': 'adam', 'lr_factor': 1, 'weight_decay': 0}","{'rotate': False, 'mirror': False, 'translate': False, 'pad': 0}",100,0.1,2,False
+4,reflect,2,CrossEntropyLoss(),"{'type': 'adam', 'lr_factor': 0.5, 'weight_decay': 0}","{'rotate': False, 'mirror': False, 'translate': False, 'pad': 0}",100,0.1,2,False
+5,reflect,2,CrossEntropyLoss(),"{'type': 'adam', 'lr_factor': 0.25, 'weight_decay': 0}","{'rotate': False, 'mirror': False, 'translate': False, 'pad': 0}",100,0.1,2,False
+6,reflect,2,CrossEntropyLoss(),"{'type': 'adam', 'lr_factor': 0.1, 'weight_decay': 0}","{'rotate': False, 'mirror': False, 'translate': False, 'pad': 0}",100,0.1,2,False
+7,reflect,2,CrossEntropyLoss(),"{'type': 'adam', 'lr_factor': 10, 'weight_decay': 0.001}","{'rotate': False, 'mirror': False, 'translate': False, 'pad': 0}",100,0.1,2,False
+8,reflect,2,CrossEntropyLoss(),"{'type': 'adam', 'lr_factor': 4, 'weight_decay': 0.001}","{'rotate': False, 'mirror': False, 'translate': False, 'pad': 0}",100,0.1,2,False
+9,reflect,2,CrossEntropyLoss(),"{'type': 'adam', 'lr_factor': 2, 'weight_decay': 0.001}","{'rotate': False, 'mirror': False, 'translate': False, 'pad': 0}",100,0.1,2,False
+10,reflect,2,CrossEntropyLoss(),"{'type': 'adam', 'lr_factor': 1, 'weight_decay': 0.001}","{'rotate': False, 'mirror': False, 'translate': False, 'pad': 0}",100,0.1,2,False
+11,reflect,2,CrossEntropyLoss(),"{'type': 'adam', 'lr_factor': 0.5, 'weight_decay': 0.001}","{'rotate': False, 'mirror': False, 'translate': False, 'pad': 0}",100,0.1,2,False
+12,reflect,2,CrossEntropyLoss(),"{'type': 'adam', 'lr_factor': 0.25, 'weight_decay': 0.001}","{'rotate': False, 'mirror': False, 'translate': False, 'pad': 0}",100,0.1,2,False
+13,reflect,2,CrossEntropyLoss(),"{'type': 'adam', 'lr_factor': 0.1, 'weight_decay': 0.001}","{'rotate': False, 'mirror': False, 'translate': False, 'pad': 0}",100,0.1,2,False
+14,reflect,2,CrossEntropyLoss(),"{'type': 'adam', 'lr_factor': 10, 'weight_decay': 1e-05}","{'rotate': False, 'mirror': False, 'translate': False, 'pad': 0}",100,0.1,2,False
+15,reflect,2,CrossEntropyLoss(),"{'type': 'adam', 'lr_factor': 4, 'weight_decay': 1e-05}","{'rotate': False, 'mirror': False, 'translate': False, 'pad': 0}",100,0.1,2,False
+16,reflect,2,CrossEntropyLoss(),"{'type': 'adam', 'lr_factor': 2, 'weight_decay': 1e-05}","{'rotate': False, 'mirror': False, 'translate': False, 'pad': 0}",100,0.1,2,False
+17,reflect,2,CrossEntropyLoss(),"{'type': 'adam', 'lr_factor': 1, 'weight_decay': 1e-05}","{'rotate': False, 'mirror': False, 'translate': False, 'pad': 0}",100,0.1,2,False
+18,reflect,2,CrossEntropyLoss(),"{'type': 'adam', 'lr_factor': 0.5, 'weight_decay': 1e-05}","{'rotate': False, 'mirror': False, 'translate': False, 'pad': 0}",100,0.1,2,False
+19,reflect,2,CrossEntropyLoss(),"{'type': 'adam', 'lr_factor': 0.25, 'weight_decay': 1e-05}","{'rotate': False, 'mirror': False, 'translate': False, 'pad': 0}",100,0.1,2,False
+20,reflect,2,CrossEntropyLoss(),"{'type': 'adam', 'lr_factor': 0.1, 'weight_decay': 1e-05}","{'rotate': False, 'mirror': False, 'translate': False, 'pad': 0}",100,0.1,2,False

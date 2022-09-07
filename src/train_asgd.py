@@ -63,4 +63,4 @@ print(len(params))
 unet = UNet.__new__(UNet)
 #
 cte = SemanticCrossEvaluator(unet, cv_param, 3)
-report = cte.cross_test_model([params[0]], cv_param['epochs_ct'], cv_param['epochs_cv'])
+report = cte.cross_test_model(params, cv_param['epochs_ct'], cv_param['epochs_cv'])
