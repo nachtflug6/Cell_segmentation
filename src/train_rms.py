@@ -20,7 +20,7 @@ cv_param = {'interval_img_out': 100,
             'datasets_path': [ds1_path, ds2_path],
             'results_path': os.path.join(cwd, '../to50jego/Cell_segmentation/results'),
             'folds': [0, 1, 2, 3],
-            'epochs_cv': 12,
+            'epochs_cv': 25,
             'epochs_ct': 100,
             'num_random_params': 3}
 
@@ -35,21 +35,21 @@ param = {'id': 0,
              # 'asgd'
          ],
              'lr_factor': [
-                 10,
-                 4,
+                 2.5,
                  2,
+                 1.75,
+                 1.5,
+                 1.25,
                  1,
-                 0.5,
-                 0.25,
-                 0.1
+                 0.75
              ],
              'weight_decay': [0,
-                              1e-3,
+                              1e-7,
                               1e-5
                               ]
          }).get_full_grid_params(),
          'augment_transform': [{'rotate': False, 'mirror': False, 'translate': False, 'pad': 0},
-                               # {'rotate': True, 'mirror': True, 'translate': False, 'pad': 0},
+                                # {'rotate': True, 'mirror': True, 'translate': False, 'pad': 0},
                                # {'rotate': True, 'mirror': True, 'translate': True, 'pad': 16},
                                # {'rotate': True, 'mirror': True, 'translate': True, 'pad': 8}
                                ],
