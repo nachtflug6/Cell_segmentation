@@ -16,9 +16,9 @@ def get_optimizer(net, optim_param):
     if optim_param['type'] == 'sgd':
         optimizer = optim.SGD(net.parameters(), lr=1e-4*optim_param['lr_factor'], weight_decay=optim_param['weight_decay'])#, momentum=0.99)
     elif optim_param['type'] == 'adam':
-        optimizer = optim.Adam(net.parameters(), lr=1e-4*optim_param['lr_factor'], weight_decay=optim_param['weight_decay'])
+        optimizer = optim.Adam(net.parameters(), lr=2.5e-5*optim_param['lr_factor'], weight_decay=optim_param['weight_decay'])
     elif optim_param['type'] == 'rmsprop':
-        optimizer = optim.RMSprop(net.parameters(), lr=1e-5*optim_param['lr_factor'], weight_decay=optim_param['weight_decay'])
+        optimizer = optim.RMSprop(net.parameters(), lr=1.25e-5*optim_param['lr_factor'], weight_decay=optim_param['weight_decay'])
     else:
         optimizer = optim.ASGD(net.parameters(), lr=1e-3*optim_param['lr_factor'], weight_decay=optim_param['weight_decay'])
     return optimizer

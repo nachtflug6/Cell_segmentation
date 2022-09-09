@@ -28,29 +28,29 @@ param = {'id': 0,
          'padding_mode': 'reflect',
          'out_classes': 2,
          'criterion': nn.CrossEntropyLoss(),
-         'optimizer': MultiHyperparameter({'type': [
-             # 'sgd',
-             'adam',
-             # 'rmsprop',
-             # 'asgd'
-         ],
-             'lr_factor': [
-                 0.5,
-                 0.4,
-                 0.3,
-                 0.25,
-                 0.2,
-                 0.1
+         'optimizer': MultiHyperparameter({
+             'type': [
+                 # 'sgd',
+                  'adam',
+                 #'rmsprop',
+                 # 'asgd'
              ],
-             'weight_decay': [1e-4,
-                              1e-5,
-                              1e-6
-                              ]
+             'lr_factor': [
+                 1.25,
+                 1,
+                 0.75
+             ],
+             'weight_decay': [
+                 # 0,
+                 1e-5
+             ]
          }).get_full_grid_params(),
          'augment_transform': [{'rotate': False, 'mirror': False, 'translate': False, 'pad': 0},
-                                {'rotate': True, 'mirror': True, 'translate': False, 'pad': 0},
-                               # {'rotate': True, 'mirror': True, 'translate': True, 'pad': 4},
-                               #{'rotate': True, 'mirror': True, 'translate': True, 'pad': 8}
+                               {'rotate': True, 'mirror': True, 'translate': False, 'pad': 0},
+                               {'rotate': True, 'mirror': True, 'translate': True, 'pad': 16},
+                               {'rotate': True, 'mirror': True, 'translate': True, 'pad': 8},
+                               {'rotate': True, 'mirror': True, 'translate': True, 'pad': 4},
+                               {'rotate': True, 'mirror': True, 'translate': True, 'pad': 2},
                                ],
          'num_augments': 100,
          'binarizer_lr': 0.1,
