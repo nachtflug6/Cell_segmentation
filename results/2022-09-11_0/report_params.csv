@@ -1,0 +1,13 @@
+id,padding_mode,out_classes,criterion,optimizer,augment_transform,num_augments,binarizer_lr,batch_size,failed
+0,reflect,2,CrossEntropyLoss(),"{'type': 'adam', 'lr_factor': 1.25, 'weight_decay': 1e-05}","{'rotate': False, 'mirror': False, 'translate': False, 'pad': 0}",100,0.1,2,False
+1,reflect,2,CrossEntropyLoss(),"{'type': 'adam', 'lr_factor': 1, 'weight_decay': 1e-05}","{'rotate': False, 'mirror': False, 'translate': False, 'pad': 0}",100,0.1,2,False
+2,reflect,2,CrossEntropyLoss(),"{'type': 'adam', 'lr_factor': 0.75, 'weight_decay': 1e-05}","{'rotate': False, 'mirror': False, 'translate': False, 'pad': 0}",100,0.1,2,False
+3,reflect,2,CrossEntropyLoss(),"{'type': 'adam', 'lr_factor': 1.25, 'weight_decay': 1e-05}","{'rotate': True, 'mirror': True, 'translate': False, 'pad': 0}",100,0.1,2,False
+4,reflect,2,CrossEntropyLoss(),"{'type': 'adam', 'lr_factor': 1, 'weight_decay': 1e-05}","{'rotate': True, 'mirror': True, 'translate': False, 'pad': 0}",100,0.1,2,False
+5,reflect,2,CrossEntropyLoss(),"{'type': 'adam', 'lr_factor': 0.75, 'weight_decay': 1e-05}","{'rotate': True, 'mirror': True, 'translate': False, 'pad': 0}",100,0.1,2,False
+6,reflect,2,CrossEntropyLoss(),"{'type': 'adam', 'lr_factor': 1.25, 'weight_decay': 1e-05}","{'rotate': True, 'mirror': True, 'translate': True, 'pad': 8}",100,0.1,2,False
+7,reflect,2,CrossEntropyLoss(),"{'type': 'adam', 'lr_factor': 1, 'weight_decay': 1e-05}","{'rotate': True, 'mirror': True, 'translate': True, 'pad': 8}",100,0.1,2,False
+8,reflect,2,CrossEntropyLoss(),"{'type': 'adam', 'lr_factor': 0.75, 'weight_decay': 1e-05}","{'rotate': True, 'mirror': True, 'translate': True, 'pad': 8}",100,0.1,2,False
+9,reflect,2,CrossEntropyLoss(),"{'type': 'adam', 'lr_factor': 1.25, 'weight_decay': 1e-05}","{'rotate': True, 'mirror': True, 'translate': True, 'pad': 4}",100,0.1,2,False
+10,reflect,2,CrossEntropyLoss(),"{'type': 'adam', 'lr_factor': 1, 'weight_decay': 1e-05}","{'rotate': True, 'mirror': True, 'translate': True, 'pad': 4}",100,0.1,2,False
+11,reflect,2,CrossEntropyLoss(),"{'type': 'adam', 'lr_factor': 0.75, 'weight_decay': 1e-05}","{'rotate': True, 'mirror': True, 'translate': True, 'pad': 4}",100,0.1,2,False

@@ -1,0 +1,2 @@
+id,padding_mode,out_classes,criterion,optimizer,augment_transform,num_augments,binarizer_lr,batch_size,failed
+0,reflect,2,CrossEntropyLoss(),"{'type': 'adam', 'lr_factor': 1, 'weight_decay': 1e-05}","{'rotate': True, 'mirror': True, 'translate': False, 'pad': 0}",100,0.1,2,False

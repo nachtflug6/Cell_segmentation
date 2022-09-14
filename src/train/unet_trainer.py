@@ -55,7 +55,7 @@ class UnetTrainer:
             else:
                 loss = self.train_epoch(num_images=num_images, out_folder=out_folder)
                 acc = self.test(num_images=num_images, out_folder=out_folder)
-            if i == 10:
+            if i == 20:
                 mean_acc = np.mean(self.test_accs)
                 if acc < 0.1 or (1.0001 > (acc / mean_acc) > 0.9999):
                     self.train_losses = np.zeros(epochs)

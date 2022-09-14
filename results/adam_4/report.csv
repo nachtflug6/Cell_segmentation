@@ -1,0 +1,16 @@
+mode,test_fold,param_id,report_id,iou_1,iou_2,iou_comb,failed
+validate,0,0,0,,,,False
+test,0,0,1,0.6339220345020294,0.5793677628040313,0.6066448986530304,False
+validate,1,0,2,,,,False
+validate,1,0,3,,,,False
+validate,1,0,4,,,,False
+test,1,0,5,0.5089131325483323,0.5648714959621429,0.5368923142552375,False
+validate,2,0,6,,,,False
+validate,2,0,7,,,,False
+validate,2,0,8,,,,False
+test,2,0,9,0.7566395223140716,0.5568327814340591,0.6567361518740654,False
+validate,3,0,10,,,,False
+validate,3,0,11,,,,False
+validate,3,0,12,,,,False
+test,3,0,13,0.5582802772521973,0.6335707187652588,0.5959254980087281,False
+final,-1,0,14,0.6144387416541577,0.5836606897413731,0.5990497156977653,False
